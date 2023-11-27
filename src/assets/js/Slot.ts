@@ -1,3 +1,8 @@
+interface WinnerListItem {
+  roundNumber: number;
+  roundTitle: string;
+  winners: any[];
+}
 interface SlotConfigurations {
   /** User configuration for maximum item inside a reel */
   maxReelItems?: number;
@@ -12,12 +17,24 @@ interface SlotConfigurations {
 
   /** User configuration for callback function that runs after user updates the name list */
   onNameListChanged?: () => void;
+
+  /** User configuration to show winner popup */
+  onShowWinnerPopup?: () => void;
 }
 
 /** Class for doing random name pick and animation */
 export default class Slot {
   /** List of names to draw from */
   private nameList: string[];
+
+  /** List of winners */
+  private winnerList: WinnerListItem[] = [];
+
+  /** Number of round */
+  private roundNumber: number;
+
+  /** Prize Number */
+  private prizeNumber: number;
 
   /** Whether there is a previous winner element displayed in reel */
   private havePreviousWinner: boolean;
@@ -43,6 +60,9 @@ export default class Slot {
   /** Callback function that runs after spinning reel */
   private onNameListChanged?: NonNullable<SlotConfigurations['onNameListChanged']>;
 
+  /** Callback function that show winner popup */
+  private onShowWinnerPopup?: NonNullable<SlotConfigurations['onShowWinnerPopup']>;
+
   /**
    * Constructor of Slot
    * @param maxReelItems  Maximum item inside a reel
@@ -50,6 +70,7 @@ export default class Slot {
    * @param reelContainerSelector  The element ID of reel items to be appended
    * @param onSpinStart  Callback function that runs before spinning reel
    * @param onNameListChanged  Callback function that runs when user updates the name list
+   * @param onShowWinnerPopup Callback function that show winner popup
    */
   constructor(
     {
@@ -58,10 +79,14 @@ export default class Slot {
       reelContainerSelector,
       onSpinStart,
       onSpinEnd,
-      onNameListChanged
+      onNameListChanged,
+      onShowWinnerPopup
     }: SlotConfigurations
   ) {
     this.nameList = [];
+    this.winnerList = [];
+    this.roundNumber = 1;
+    this.prizeNumber = 50;
     this.havePreviousWinner = false;
     this.reelContainer = document.querySelector(reelContainerSelector);
     this.maxReelItems = maxReelItems;
@@ -69,6 +94,7 @@ export default class Slot {
     this.onSpinStart = onSpinStart;
     this.onSpinEnd = onSpinEnd;
     this.onNameListChanged = onNameListChanged;
+    this.onShowWinnerPopup = onShowWinnerPopup;
 
     // Create reel animation
     this.reelAnimation = this.reelContainer?.animate(
@@ -114,6 +140,11 @@ export default class Slot {
   /** Getter for name list */
   get names(): string[] {
     return this.nameList;
+  }
+
+  /** Getter for winner list */
+  get winner(): WinnerListItem[] {
+    return this.winnerList;
   }
 
   /**
@@ -186,14 +217,40 @@ export default class Slot {
       newReelItem.innerHTML = name;
       fragment.appendChild(newReelItem);
     });
-
     reelContainer.appendChild(fragment);
-
     console.log('Displayed items: ', randomNames);
     console.log('Winner: ', randomNames[randomNames.length - 1]);
+    const winner = { number: this.prizeNumber -= 1, name: randomNames[randomNames.length - 1] };
+    const roundIndex = this.getRoundIndex(this.roundNumber);
+    if (!this.winnerList.length) {
+      this.winnerList.push({
+        roundNumber: 1,
+        roundTitle: 'Round 1',
+        winners: [winner]
+      });
+    } else if (this.winnerList[roundIndex].winners.length % 5 === 0) {
+      this.roundNumber += 1;
+      // If divisible by 5, create a new round
+      this.winnerList.unshift({
+        roundNumber: this.roundNumber,
+        roundTitle: `Round ${this.roundNumber}`,
+        winners: [winner]
+      });
+    } else {
+      // Add the winner to the current round
+      this.winnerList[roundIndex].winners.push(winner);
+      if (this.winnerList[roundIndex].winners.length === 5 && this.prizeNumber > 10) {
+        setTimeout(() => {
+          // Show popup
+          if (this.onShowWinnerPopup) {
+            this.onShowWinnerPopup();
+          }
+        }, 6000);
+      }
+    }
 
     // Remove winner form name list if necessary
-    if (shouldRemoveWinner) {
+    if (shouldRemoveWinner === true) {
       this.nameList.splice(this.nameList.findIndex(
         (name) => name === randomNames[randomNames.length - 1]
       ), 1);
@@ -224,5 +281,10 @@ export default class Slot {
       this.onSpinEnd();
     }
     return true;
+  }
+
+  // Function to get the round index
+  getRoundIndex(roundNumber) {
+    return this.winnerList.findIndex((round) => round.roundNumber === roundNumber);
   }
 }

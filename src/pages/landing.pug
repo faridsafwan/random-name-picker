@@ -6,6 +6,8 @@ include ../mixins/icons
       +svg-icon.red.big(svg-icon-name='fullscreen')
     button#settings-button.icon-button.icon-button--small
       +svg-icon.red.big(svg-icon-name='settings')
+  .winner-group
+    button#winner-button.solid-button Show winner
 
   canvas#confetti-canvas.confetti
 
@@ -13,6 +15,7 @@ include ../mixins/icons
     .title
       //- Pug loader currently does not handle webpack alias so we will use relative path here
       include ../assets/images/title.svg
+      span #50
 
     .slot
       .slot__outer
@@ -48,3 +51,7 @@ include ../mixins/icons
         button#settings-save.solid-button.solid-button Save
         button#settings-close.solid-button.solid-button--danger Discard and close
 
+  #winner.winner 
+    #winner-panel.winner__panel
+      div.winner__panel__group
+        button#winner-close.solid-button.solid-button--danger Close

@@ -39,6 +39,16 @@
   }
 }
 
+.winner-group {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+
+  .icon-button {
+    margin: 0 1.5rem 0 0;
+  }
+}
+
 .slot {
   position: relative;
 
@@ -131,6 +141,26 @@
   }
 }
 
+#winner-button {
+  width: $draw-button-width;
+  max-width: 100%;
+  // margin: $draw-button-margin-top 0 0;
+  position: relative;
+  z-index: $z-index-draw-button; // make sure draw button on top of sunburst
+
+  @each $media-query, $factor in $scale-factors {
+    @media #{$media-query} {
+      width: $winner-button-width * $factor;
+      // margin: $draw-button-margin-top * $factor 0 0;
+      font-size: max((1.75rem * $factor), 1rem);
+      line-height: max((1.75rem * $factor), 1rem);
+      padding: 1rem * $factor 0.625rem * $factor;
+      border-radius: 0.625rem * $factor;
+      @include shadow('large', $factor);
+    }
+  }
+}
+
 .settings {
   position: fixed;
   z-index: $z-index-settings - 1;
@@ -186,12 +216,70 @@
   }
 }
 
-.theme--red .settings__panel {
+.winner {
+  position: fixed;
+  z-index: $z-index-settings - 1;
+  background-color: $color-settings-mask;
+  content: ' ';
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+
+  &__panel {
+    position: absolute; /* Change fixed to absolute */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the panel */
+    z-index: $z-index-settings;
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    max-width: $setting-panel-max-width;
+    padding: 3.125rem 3.125rem 0 3.125rem;
+    overflow: auto;
+    -webkit-overflow-scrolling: auto;
+
+    // Worksround for firefox overflow padding bottom issue
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=748518
+    &__group:last-child {
+      padding-bottom: 3.125rem;
+    }
+
+    @media #{$mobile} {
+      padding: 10% 10% 0 10%;
+
+      &__group:last-child {
+        padding-bottom: 10%;
+      }
+    }
+  }
+
+  &__title {
+    margin: 0 0 1.875rem 0;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  #winner-save,
+  #winner-close {
+    margin: 1.875rem 0 0 0;
+    display: block;
+    width: 100%;
+  }
+}
+
+.theme--red .settings__panel,
+.theme--red .winner__panel {
   background-color: $color-settings-background-red;
   color: $color-text-light;
 }
 
-.theme--purple .settings__panel {
+.theme--purple .settings__panel,
+.theme--purple .winner__panel {
   background-color: $color-settings-background-purple;
   color: $color-text-light;
 }

@@ -11,6 +11,10 @@ import SoundEffects from '@js/SoundEffects';
   const settingsContent = document.getElementById('settings-panel') as HTMLDivElement | null;
   const settingsSaveButton = document.getElementById('settings-save') as HTMLButtonElement | null;
   const settingsCloseButton = document.getElementById('settings-close') as HTMLButtonElement | null;
+  const winnerButton = document.getElementById('winner-button') as HTMLButtonElement | null;
+  const winnerWrapper = document.getElementById('winner') as HTMLDivElement | null;
+  const winnerContent = document.getElementById('winner-panel') as HTMLDivElement | null;
+  const winnerCloseButton = document.getElementById('winner-close') as HTMLButtonElement | null;
   const sunburstSvg = document.getElementById('sunburst') as HTMLImageElement | null;
   const confettiCanvas = document.getElementById('confetti-canvas') as HTMLCanvasElement | null;
   const nameListTextArea = document.getElementById('name-list') as HTMLTextAreaElement | null;
@@ -26,6 +30,10 @@ import SoundEffects from '@js/SoundEffects';
     && settingsContent
     && settingsSaveButton
     && settingsCloseButton
+    && winnerButton
+    && winnerWrapper
+    && winnerContent
+    && winnerCloseButton
     && sunburstSvg
     && confettiCanvas
     && nameListTextArea
@@ -94,13 +102,47 @@ import SoundEffects from '@js/SoundEffects';
     settingsButton.disabled = false;
   };
 
+  /** To open the winner page */
+  const onShowWinnerPopup = () => {
+    // const winnerData = [
+    //   {
+    //     roundNumber: 1,
+    //     roundTitle: 'Round 1',
+    //     winners: [
+    //       { number: 6000, name: 'MUHAMAD FARID SAFWAN' },
+    //       { number: 6001, name: 'YABHG TUN DR MAHATHIR MOHAMAD' },
+    //       // Add other winners for Round 1
+    //     ]
+    //   },
+    //   {
+    //     roundNumber: 2,
+    //     roundTitle: 'Round 2',
+    //     winners: [
+    //       { number: 6000, name: 'MUHAMAD FARID SAFWAN' },
+    //       { number: 6001, name: 'YABHG TUN DR MAHATHIR MOHAMAD' },
+    //       // Add other winners for Round 2
+    //     ]
+    //   }
+    // ];
+    // eslint-disable-next-line no-use-before-define
+    populateWinnerList(slot.winner);
+    winnerWrapper.style.display = 'block';
+  };
+
+  /** To close the winner page */
+  const onWinnerClose = () => {
+    settingsContent.scrollTop = 0;
+    winnerWrapper.style.display = 'none';
+  };
+
   /** Slot instance */
   const slot = new Slot({
     reelContainerSelector: '#reel',
     maxReelItems: MAX_REEL_ITEMS,
     onSpinStart,
     onSpinEnd,
-    onNameListChanged: stopWinningAnimation
+    onNameListChanged: stopWinningAnimation,
+    onShowWinnerPopup
   });
 
   /** To open the setting page */
@@ -119,6 +161,26 @@ import SoundEffects from '@js/SoundEffects';
 
   // Click handler for "Draw" button
   drawButton.addEventListener('click', () => {
+    slot.names = [
+      'Adila',
+      'Nur',
+      'Adam',
+      'Fayyaz',
+      'Farid',
+      'Safwan',
+      'Airis',
+      'Felora',
+      'Adelia',
+      'Johan',
+      'Saiful',
+      'Ros',
+      'Pan Gon',
+      'Arturo',
+      'Jose',
+      'Karen',
+      'Bill',
+      'Santosh'
+    ];
     if (!slot.names.length) {
       onSettingsOpen();
       return;
@@ -161,4 +223,35 @@ import SoundEffects from '@js/SoundEffects';
 
   // Click handler for "Discard and close" button for setting page
   settingsCloseButton.addEventListener('click', onSettingsClose);
+
+  const populateWinnerList = (winnerData) => {
+    winnerContent.innerHTML = ''; // Clear previous content
+    // Iterate through rounds in the winner data
+    winnerData.forEach((roundData) => {
+      // Create a new label element for the round
+      const roundLabel = document.createElement('label');
+      roundLabel.setAttribute('for', `name-list-${roundData.roundNumber}`);
+      roundLabel.textContent = roundData.roundTitle;
+      // Create a new ul element
+      const ul = document.createElement('ul');
+      // Use forEach for winners array
+      roundData.winners.forEach((winner) => {
+        const li = document.createElement('li');
+        li.textContent = `${winner.number} - ${winner.name}`;
+        ul.appendChild(li);
+      });
+      // Append the label and ul to the winnerContent
+      winnerContent.appendChild(roundLabel);
+      winnerContent.appendChild(ul);
+    });
+    // Create buttons
+    const discardButton = document.createElement('button');
+    discardButton.setAttribute('id', 'winner-close');
+    discardButton.setAttribute('class', 'solid-button solid-button--danger');
+    discardButton.textContent = 'Close';
+    // Append buttons to the winnerContent
+    winnerContent.appendChild(discardButton);
+    // Add click event listener to the "Discard and close" button
+    discardButton.addEventListener('click', onWinnerClose);
+  };
 })();
