@@ -147,6 +147,11 @@ export default class Slot {
     return this.winnerList;
   }
 
+  /** Getter for prize number */
+  get currentPrizeNumber(): number {
+    return this.prizeNumber;
+  }
+
   /**
    * Setter for shouldRemoveWinner
    * @param removeWinner  Whether the winner should be removed from name list
@@ -220,7 +225,7 @@ export default class Slot {
     reelContainer.appendChild(fragment);
     console.log('Displayed items: ', randomNames);
     console.log('Winner: ', randomNames[randomNames.length - 1]);
-    const winner = { number: this.prizeNumber -= 1, name: randomNames[randomNames.length - 1] };
+    const winner = { number: this.prizeNumber, name: randomNames[randomNames.length - 1] };
     const roundIndex = this.getRoundIndex(this.roundNumber);
     if (!this.winnerList.length) {
       this.winnerList.push({
@@ -248,6 +253,7 @@ export default class Slot {
         }, 6000);
       }
     }
+    console.log(this.winnerList, 'this.winnerList');
 
     // Remove winner form name list if necessary
     if (shouldRemoveWinner === true) {
@@ -280,6 +286,8 @@ export default class Slot {
     if (this.onSpinEnd) {
       this.onSpinEnd();
     }
+
+    this.prizeNumber -= 1;
     return true;
   }
 

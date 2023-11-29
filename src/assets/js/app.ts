@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import confetti from 'canvas-confetti';
 import Slot from '@js/Slot';
 import SoundEffects from '@js/SoundEffects';
@@ -20,6 +21,7 @@ import SoundEffects from '@js/SoundEffects';
   const nameListTextArea = document.getElementById('name-list') as HTMLTextAreaElement | null;
   const removeNameFromListCheckbox = document.getElementById('remove-from-list') as HTMLInputElement | null;
   const enableSoundCheckbox = document.getElementById('enable-sound') as HTMLInputElement | null;
+  const prizeNumber = document.getElementById('prize-number') as HTMLButtonElement | null;
 
   // Graceful exit if necessary elements are not found
   if (!(
@@ -39,6 +41,7 @@ import SoundEffects from '@js/SoundEffects';
     && nameListTextArea
     && removeNameFromListCheckbox
     && enableSoundCheckbox
+    && prizeNumber
   )) {
     console.error('One or more Element ID is invalid. This is possibly a bug.');
     return;
@@ -91,6 +94,7 @@ import SoundEffects from '@js/SoundEffects';
     drawButton.disabled = true;
     settingsButton.disabled = true;
     soundEffects.spin((MAX_REEL_ITEMS - 1) / 10);
+    prizeNumber.textContent = `#${slot.currentPrizeNumber}`;
   };
 
   /**  Functions to be trigger after spinning */
@@ -124,7 +128,7 @@ import SoundEffects from '@js/SoundEffects';
     //     ]
     //   }
     // ];
-    // eslint-disable-next-line no-use-before-define
+
     populateWinnerList(slot.winner);
     winnerWrapper.style.display = 'block';
   };
