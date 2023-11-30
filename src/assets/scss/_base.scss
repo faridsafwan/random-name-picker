@@ -64,6 +64,18 @@ body {
   color: $color-text-light;
 }
 
+.theme--grey {
+  background: linear-gradient(45deg, #565f64 0%, #565f64 50%, #c8ccce 100%);
+  color: #ffffff; /* Text color is white for contrast */
+}
+
+.theme--mlng {
+  /* Add background image from the internet */
+  background-image: url('https://i.imgur.com/bgNhcts.jpg');
+  background-size: cover; /* Adjust as needed */
+  background-repeat: no-repeat; /* Adjust as needed */
+}
+
 .main {
   @include flex-center;
   padding: 3.125rem 0;
