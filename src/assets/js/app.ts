@@ -257,35 +257,30 @@ import SoundEffects from '@js/SoundEffects';
   document.addEventListener('DOMContentLoaded', () => {
     // This function will be called when the DOM is ready
 
+    let isInputDisabled = false;
+
+    const disableInputForSeconds = (milliseconds) => {
+      isInputDisabled = true;
+      setTimeout(() => {
+        isInputDisabled = false;
+      }, milliseconds);
+    };
+
     document.addEventListener('keydown', (event) => {
       console.log('Key pressed:', event.key);
       if (event.key === ' ') {
-        // Handle keyboard events here
-        slot.names = [
-          'Adila',
-          'Nur',
-          'Adam',
-          'Fayyaz',
-          'Farid',
-          'Safwan',
-          'Airis',
-          'Felora',
-          'Adelia',
-          'Johan',
-          'Saiful',
-          'Ros',
-          'Pan Gon',
-          'Arturo',
-          'Jose',
-          'Karen',
-          'Bill',
-          'Santosh'
-        ];
+        // Check if input is disabled
+        if (isInputDisabled) {
+          return; // Ignore key press if input is disabled
+        }
         if (!slot.names.length) {
           onSettingsOpen();
           return;
         }
         slot.spin();
+
+        // Disable input for 3 seconds (3000 milliseconds)
+        disableInputForSeconds(7000);
       }
       if (event.key === 's') {
         onSettingsOpen();
@@ -304,4 +299,28 @@ import SoundEffects from '@js/SoundEffects';
       }
     });
   });
+
+  slot.names = [
+    'Adila',
+    'Adam',
+    'Fayyaz',
+    'Farid',
+    'Safwan',
+    'Shafiq',
+    'Zammizi',
+    'Juni',
+    'Qie',
+    'Iqbal',
+    'Farhan',
+    'Iemir',
+    'Faqeeh',
+    'Hafez',
+    'Iqxbal',
+    'Eidress',
+    'Malique',
+    'Lisa',
+    'Jalwa',
+    'Apek',
+    'Habib'
+  ];
 })();

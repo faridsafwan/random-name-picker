@@ -13,7 +13,7 @@
   margin: $title-margin-top 0 $title-margin-bottom 0;
   position: relative;
   z-index: $z-index-title; // make sure title on top of sunburst
-  color: $color-title-border;
+  // color: $color-title-border;
   // display: inline-block;
   display: flex;
   flex-direction: column;
@@ -322,15 +322,24 @@
   pointer-events: none;
 }
 
-h1#prize-number {
+span#prize-number {
   font-size: 36px; /* Set the font size to make it bigger */
   font-family: 'Arial', sans-serif; /* Set the font family */
   text-align: center; /* Center the text */
   text-transform: uppercase; /* Convert text to uppercase */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle text shadow */
-  color: $color-title-border;
+  // color: $color-title-border;
 }
 
 .prize-image {
   display: none;
+}
+
+.event-title {
+  font-size: 36px; /* Set the font size to make it bigger */
+  font-family: 'Arial', sans-serif; /* Set the font family */
+  text-align: center; /* Center the text */
+  text-transform: uppercase; /* Convert text to uppercase */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle text shadow */
+  // color: $color-title-border;
 }
