@@ -40,7 +40,8 @@ module.exports = {
           globOptions: { ignore: ['**/.DS_Store'] }
         },
         { from: path.resolve(__dirname, '../src/assets/images/favicon.ico'), to: 'assets/images/favicon.ico' },
-        { from: path.resolve(__dirname, '../src/manifest.json'), to: 'manifest.json' }
+        { from: path.resolve(__dirname, '../src/manifest.json'), to: 'manifest.json' },
+        { from: path.resolve(__dirname, '../src/assets/images/prize'), to: 'assets/images/prize' }
       ]
     }),
     new HtmlWebpackPlugin({

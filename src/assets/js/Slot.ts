@@ -240,28 +240,22 @@ export default class Slot {
         case 3:
         case 4:
         case 5:
-        case 49:
-          winner.img = 'https://i.imgur.com/uQegoyE.jpg';
+          winner.img = 'assets/images/prize/goldbar.jpeg';
           break;
         case 6:
-        case 48:
-          winner.img = 'https://i.imgur.com/2eGmG7g.png';
+          winner.img = 'assets/images/prize/ps5.webp';
           break;
         case 7:
-        case 47:
-          winner.img = 'https://i.imgur.com/GMH3s75.png';
+          winner.img = 'assets/images/prize/dyson.png';
           break;
         case 8:
-        case 46:
-          winner.img = 'https://i.imgur.com/NrO62cC.jpg';
+          winner.img = 'assets/images/prize/ipad.jpeg';
           break;
         case 9:
-        case 45:
-          winner.img = 'https://i.imgur.com/oC4gZVo.png';
+          winner.img = 'assets/images/prize/electrolux.avif ';
           break;
         case 10:
-        case 44:
-          winner.img = 'https://i.imgur.com/F69srUs.png';
+          winner.img = 'assets/images/prize/tv.avif.jpeg';
           break;
         default:
           break;
