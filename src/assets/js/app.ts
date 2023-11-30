@@ -5,14 +5,10 @@ import SoundEffects from '@js/SoundEffects';
 
 // Initialize slot machine
 (() => {
-  const drawButton = document.getElementById('draw-button') as HTMLButtonElement | null;
-  const fullscreenButton = document.getElementById('fullscreen-button') as HTMLButtonElement | null;
-  const settingsButton = document.getElementById('settings-button') as HTMLButtonElement | null;
   const settingsWrapper = document.getElementById('settings') as HTMLDivElement | null;
   const settingsContent = document.getElementById('settings-panel') as HTMLDivElement | null;
   const settingsSaveButton = document.getElementById('settings-save') as HTMLButtonElement | null;
   const settingsCloseButton = document.getElementById('settings-close') as HTMLButtonElement | null;
-  const winnerButton = document.getElementById('winner-button') as HTMLButtonElement | null;
   const winnerWrapper = document.getElementById('winner') as HTMLDivElement | null;
   const winnerContent = document.getElementById('winner-panel') as HTMLDivElement | null;
   const winnerCloseButton = document.getElementById('winner-close') as HTMLButtonElement | null;
@@ -26,14 +22,10 @@ import SoundEffects from '@js/SoundEffects';
 
   // Graceful exit if necessary elements are not found
   if (!(
-    drawButton
-    && fullscreenButton
-    && settingsButton
-    && settingsWrapper
+    settingsWrapper
     && settingsContent
     && settingsSaveButton
     && settingsCloseButton
-    && winnerButton
     && winnerWrapper
     && winnerContent
     && winnerCloseButton
@@ -93,8 +85,6 @@ import SoundEffects from '@js/SoundEffects';
   /**  Function to be trigger before spinning */
   const onSpinStart = () => {
     stopWinningAnimation();
-    drawButton.disabled = true;
-    settingsButton.disabled = true;
     soundEffects.spin((MAX_REEL_ITEMS - 1) / 10);
     prizeNumber.textContent = `Lucky Draw #${slot.currentPrizeNumber}`;
     const imgElement = roundContainer.querySelector('img');
@@ -108,8 +98,6 @@ import SoundEffects from '@js/SoundEffects';
     confettiAnimation();
     sunburstSvg.style.display = 'block';
     await soundEffects.win();
-    drawButton.disabled = false;
-    settingsButton.disabled = false;
     onShowGrandWinnerImage();
   };
 
@@ -171,56 +159,56 @@ import SoundEffects from '@js/SoundEffects';
   };
 
   // Click handler for "Draw" button
-  drawButton.addEventListener('click', () => {
-    slot.names = [
-      'Adila',
-      'Nur',
-      'Adam',
-      'Fayyaz',
-      'Farid',
-      'Safwan',
-      'Airis',
-      'Felora',
-      'Adelia',
-      'Johan',
-      'Saiful',
-      'Ros',
-      'Pan Gon',
-      'Arturo',
-      'Jose',
-      'Karen',
-      'Bill',
-      'Santosh'
-    ];
-    if (!slot.names.length) {
-      onSettingsOpen();
-      return;
-    }
+  // drawButton.addEventListener('click', () => {
+  //   slot.names = [
+  //     'Adila',
+  //     'Nur',
+  //     'Adam',
+  //     'Fayyaz',
+  //     'Farid',
+  //     'Safwan',
+  //     'Airis',
+  //     'Felora',
+  //     'Adelia',
+  //     'Johan',
+  //     'Saiful',
+  //     'Ros',
+  //     'Pan Gon',
+  //     'Arturo',
+  //     'Jose',
+  //     'Karen',
+  //     'Bill',
+  //     'Santosh'
+  //   ];
+  //   if (!slot.names.length) {
+  //     onSettingsOpen();
+  //     return;
+  //   }
 
-    slot.spin();
-  });
+  //   slot.spin();
+  // });
 
   // Hide fullscreen button when it is not supported
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore - for older browsers support
-  if (!(document.documentElement.requestFullscreen && document.exitFullscreen)) {
-    fullscreenButton.remove();
-  }
+  // if (!(document.documentElement.requestFullscreen && document.exitFullscreen)) {
+  //   fullscreenButton.remove();
+  // }
 
-  // Click handler for "Fullscreen" button
-  fullscreenButton.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-      return;
-    }
+  // // Click handler for "Fullscreen" button
+  // fullscreenButton.addEventListener('click', () => {
+  //   if (!document.fullscreenElement) {
+  //     document.documentElement.requestFullscreen();
+  //     return;
+  //   }
 
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
-  });
+  //   if (document.exitFullscreen) {
+  //     document.exitFullscreen();
+  //   }
+  // });
 
   // Click handler for "Settings" button
-  settingsButton.addEventListener('click', onSettingsOpen);
+  // settingsButton.addEventListener('click', onSettingsOpen);
 
   // Click handler for "Save" button for setting page
   settingsSaveButton.addEventListener('click', () => {
@@ -265,4 +253,55 @@ import SoundEffects from '@js/SoundEffects';
     // Add click event listener to the "Discard and close" button
     discardButton.addEventListener('click', onWinnerClose);
   };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // This function will be called when the DOM is ready
+
+    document.addEventListener('keydown', (event) => {
+      console.log('Key pressed:', event.key);
+      if (event.key === ' ') {
+        // Handle keyboard events here
+        slot.names = [
+          'Adila',
+          'Nur',
+          'Adam',
+          'Fayyaz',
+          'Farid',
+          'Safwan',
+          'Airis',
+          'Felora',
+          'Adelia',
+          'Johan',
+          'Saiful',
+          'Ros',
+          'Pan Gon',
+          'Arturo',
+          'Jose',
+          'Karen',
+          'Bill',
+          'Santosh'
+        ];
+        if (!slot.names.length) {
+          onSettingsOpen();
+          return;
+        }
+        slot.spin();
+      }
+      if (event.key === 's') {
+        onSettingsOpen();
+      }
+      if (event.key === 'w') {
+        onShowWinnerPopup();
+      }
+      if (event.key === 'f') {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+          return;
+        }
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    });
+  });
 })();
