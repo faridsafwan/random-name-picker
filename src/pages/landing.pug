@@ -14,9 +14,8 @@ include ../mixins/icons
   #lucky-draw
     .title
       //- Pug loader currently does not handle webpack alias so we will use relative path here
-      include ../assets/images/title.svg
-      span#prize-number #50
-
+      h1#prize-number Lucky Draw #50
+      div#round-container
     .slot
       .slot__outer
         .slot__inner

@@ -22,6 +22,7 @@ import SoundEffects from '@js/SoundEffects';
   const removeNameFromListCheckbox = document.getElementById('remove-from-list') as HTMLInputElement | null;
   const enableSoundCheckbox = document.getElementById('enable-sound') as HTMLInputElement | null;
   const prizeNumber = document.getElementById('prize-number') as HTMLButtonElement | null;
+  const roundContainer = document.getElementById('round-container') as HTMLButtonElement | null;
 
   // Graceful exit if necessary elements are not found
   if (!(
@@ -42,6 +43,7 @@ import SoundEffects from '@js/SoundEffects';
     && removeNameFromListCheckbox
     && enableSoundCheckbox
     && prizeNumber
+    && roundContainer
   )) {
     console.error('One or more Element ID is invalid. This is possibly a bug.');
     return;
@@ -94,7 +96,11 @@ import SoundEffects from '@js/SoundEffects';
     drawButton.disabled = true;
     settingsButton.disabled = true;
     soundEffects.spin((MAX_REEL_ITEMS - 1) / 10);
-    prizeNumber.textContent = `#${slot.currentPrizeNumber}`;
+    prizeNumber.textContent = `Lucky Draw #${slot.currentPrizeNumber}`;
+    const imgElement = roundContainer.querySelector('img');
+    if (imgElement) {
+      imgElement.remove();
+    }
   };
 
   /**  Functions to be trigger after spinning */
@@ -104,33 +110,34 @@ import SoundEffects from '@js/SoundEffects';
     await soundEffects.win();
     drawButton.disabled = false;
     settingsButton.disabled = false;
+    onShowGrandWinnerImage();
   };
 
   /** To open the winner page */
   const onShowWinnerPopup = () => {
-    // const winnerData = [
-    //   {
-    //     roundNumber: 1,
-    //     roundTitle: 'Round 1',
-    //     winners: [
-    //       { number: 6000, name: 'MUHAMAD FARID SAFWAN' },
-    //       { number: 6001, name: 'YABHG TUN DR MAHATHIR MOHAMAD' },
-    //       // Add other winners for Round 1
-    //     ]
-    //   },
-    //   {
-    //     roundNumber: 2,
-    //     roundTitle: 'Round 2',
-    //     winners: [
-    //       { number: 6000, name: 'MUHAMAD FARID SAFWAN' },
-    //       { number: 6001, name: 'YABHG TUN DR MAHATHIR MOHAMAD' },
-    //       // Add other winners for Round 2
-    //     ]
-    //   }
-    // ];
-
     populateWinnerList(slot.winner);
     winnerWrapper.style.display = 'block';
+  };
+
+  /** To open the grand winner page */
+  const onShowGrandWinnerImage = () => {
+    // extract data to get the latest winner
+    const latestRound = slot.winner[0];
+
+    // Get the winners array from the latest round
+    const latestWinners = latestRound.winners;
+
+    // Get the last winner from the latest winners
+    const latestWinner = latestWinners[latestWinners.length - 1];
+    if (latestWinner.img !== '') {
+      // Create a new img element for the image
+      const roundImage = document.createElement('img');
+      roundImage.setAttribute('src', latestWinner.img); // Set the image source
+      roundImage.setAttribute('alt', `Prize number ${slot.currentPrizeNumber + 1}`); // Set the alt text
+      roundImage.style.width = '100%'; // Set the width
+      roundImage.style.maxHeight = '280px'; // Set the height
+      roundContainer.appendChild(roundImage);
+    }
   };
 
   /** To close the winner page */

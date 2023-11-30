@@ -225,7 +225,7 @@ export default class Slot {
     reelContainer.appendChild(fragment);
     console.log('Displayed items: ', randomNames);
     console.log('Winner: ', randomNames[randomNames.length - 1]);
-    const winner = { number: this.prizeNumber, name: randomNames[randomNames.length - 1] };
+    const winner = { number: this.prizeNumber, name: randomNames[randomNames.length - 1], img: '' };
     const roundIndex = this.getRoundIndex(this.roundNumber);
     if (!this.winnerList.length) {
       this.winnerList.push({
@@ -233,24 +233,72 @@ export default class Slot {
         roundTitle: 'Round 1',
         winners: [winner]
       });
-    } else if (this.winnerList[roundIndex].winners.length % 5 === 0) {
-      this.roundNumber += 1;
-      // If divisible by 5, create a new round
-      this.winnerList.unshift({
-        roundNumber: this.roundNumber,
-        roundTitle: `Round ${this.roundNumber}`,
-        winners: [winner]
-      });
-    } else {
+    } else if (this.prizeNumber < 11) {
+      switch (this.prizeNumber) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 49:
+          winner.img = 'https://i.imgur.com/uQegoyE.jpg';
+          break;
+        case 6:
+        case 48:
+          winner.img = 'https://i.imgur.com/2eGmG7g.png';
+          break;
+        case 7:
+        case 47:
+          winner.img = 'https://i.imgur.com/GMH3s75.png';
+          break;
+        case 8:
+        case 46:
+          winner.img = 'https://i.imgur.com/NrO62cC.jpg';
+          break;
+        case 9:
+        case 45:
+          winner.img = 'https://i.imgur.com/oC4gZVo.png';
+          break;
+        case 10:
+        case 44:
+          winner.img = 'https://i.imgur.com/F69srUs.png';
+          break;
+        default:
+          break;
+      }
       // Add the winner to the current round
-      this.winnerList[roundIndex].winners.push(winner);
-      if (this.winnerList[roundIndex].winners.length === 5 && this.prizeNumber > 10) {
-        setTimeout(() => {
-          // Show popup
-          if (this.onShowWinnerPopup) {
-            this.onShowWinnerPopup();
-          }
-        }, 6000);
+      if (this.winnerList[roundIndex].winners.length % 5 === 0) {
+        this.roundNumber += 1;
+        // If divisible by 5, create a new round
+        this.winnerList.unshift({
+          roundNumber: this.roundNumber,
+          roundTitle: `Round ${this.roundNumber}`,
+          winners: [winner]
+        });
+      } else {
+        // Add the winner to the current round
+        this.winnerList[roundIndex].winners.push(winner);
+      }
+    } else if (this.prizeNumber > 10) {
+      if (this.winnerList[roundIndex].winners.length % 5 === 0) {
+        this.roundNumber += 1;
+        // If divisible by 5, create a new round
+        this.winnerList.unshift({
+          roundNumber: this.roundNumber,
+          roundTitle: `Round ${this.roundNumber}`,
+          winners: [winner]
+        });
+      } else {
+        // Add the winner to the current round
+        this.winnerList[roundIndex].winners.push(winner);
+        if (this.winnerList[roundIndex].winners.length === 5) {
+          setTimeout(() => {
+            // Show popup
+            if (this.onShowWinnerPopup) {
+              this.onShowWinnerPopup();
+            }
+          }, 6000);
+        }
       }
     }
     console.log(this.winnerList, 'this.winnerList');

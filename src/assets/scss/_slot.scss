@@ -3,6 +3,7 @@
   text-align: center;
   position: relative;
   z-index: $z-index-lucky-draw; // make sure contents are on top of confetting
+  display: contents;
 }
 
 .title {
@@ -13,7 +14,10 @@
   position: relative;
   z-index: $z-index-title; // make sure title on top of sunburst
   color: $color-title-border;
-  display: inline-block;
+  // display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   @each $media-query, $factor in $scale-factors {
     @media #{$media-query} {
@@ -316,4 +320,16 @@
   left: 0;
   z-index: $z-index-confetti;
   pointer-events: none;
+}
+
+h1#prize-number {
+  font-size: 36px; /* Set the font size to make it bigger */
+  font-family: 'Arial', sans-serif; /* Set the font family */
+  text-align: center; /* Center the text */
+  text-transform: uppercase; /* Convert text to uppercase */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle text shadow */
+}
+
+.prize-image {
+  display: none;
 }
