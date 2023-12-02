@@ -240,22 +240,22 @@ export default class Slot {
         case 3:
         case 4:
         case 5:
-          winner.img = 'assets/images/prize/goldbar.jpeg';
+          winner.img = 'assets/images/prize/goldbar.png';
           break;
         case 6:
-          winner.img = 'assets/images/prize/ps5.webp';
+          winner.img = 'assets/images/prize/ps5.png';
           break;
         case 7:
           winner.img = 'assets/images/prize/dyson.png';
           break;
         case 8:
-          winner.img = 'assets/images/prize/ipad.jpeg';
+          winner.img = 'assets/images/prize/ipad.png';
           break;
         case 9:
-          winner.img = 'assets/images/prize/electrolux.avif ';
+          winner.img = 'assets/images/prize/electrolux.png ';
           break;
         case 10:
-          winner.img = 'assets/images/prize/tv.avif.jpeg';
+          winner.img = 'assets/images/prize/tv.png';
           break;
         default:
           break;

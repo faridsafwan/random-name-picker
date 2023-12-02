@@ -124,6 +124,7 @@ import SoundEffects from '@js/SoundEffects';
       roundImage.setAttribute('alt', `Prize number ${slot.currentPrizeNumber + 1}`); // Set the alt text
       roundImage.style.width = '100%'; // Set the width
       roundImage.style.maxHeight = '280px'; // Set the height
+      roundContainer.style.zIndex = '1'; // Set z-index
       roundContainer.appendChild(roundImage);
     }
   };

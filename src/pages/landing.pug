@@ -15,7 +15,6 @@ include ../mixins/icons
     .title
       //- Pug loader currently does not handle webpack alias so we will use relative path here
       span#prize-number Lucky Draw #50
-      div#round-container
     .slot
       .slot__outer
         .slot__inner
@@ -24,6 +23,7 @@ include ../mixins/icons
 
       #sunburst.sunburst
         img(src="~@images/sunburst.svg" alt="sunburst")
+    div#round-container
 
     //- button#draw-button.solid-button Draw
 
