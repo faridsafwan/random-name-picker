@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap');
-
+@import url('https:/fonts.googleapis.com/css2?family=Forum&display=swap');
 *:not(input, textarea, select) {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -22,7 +21,7 @@ body {
   height: 100%;
   font-size: 16px;
   line-height: 1.5;
-  font-family: 'Nunito Sans', 微軟正黑體, 'Microsoft JhengHei',
+  font-family: 'Forum', 'Nunito Sans', 微軟正黑體, 'Microsoft JhengHei',
     'Microsoft JhengHei UI', 'Microsoft YaHei', 'Microsoft YaHei UI',
     'PingFang TC', 'Lantinghei TC', 'Heiti TC', 'Apple LiGothic', 'PMingLiU',
     Arial, sans-serif;
@@ -71,9 +70,10 @@ body {
 
 .theme--mlng {
   /* Add background image from the internet */
-  background-image: url('https://i.imgur.com/bgNhcts.jpg');
+  background-image: url('https://i.imgur.com/JXXoPip.jpg');
   background-size: cover; /* Adjust as needed */
   background-repeat: no-repeat; /* Adjust as needed */
+  color: #ffffff; /* Text color is white for contrast */
 }
 
 .main {

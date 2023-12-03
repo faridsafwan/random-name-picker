@@ -10,11 +10,11 @@ include ../mixins/icons
   canvas#confetti-canvas.confetti
 
   #lucky-draw
-    .event-title 
-      span.event-title MLNG 45TH ANNIVERSARY
+    //- .event-title 
+    //-   span.event-title MLNG 45TH ANNIVERSARY
     .title
       //- Pug loader currently does not handle webpack alias so we will use relative path here
-      span#prize-number Lucky Draw #50
+    span#prize-number(style="font-family: 'Forum', sans-serif") Lucky Draw #10
     .slot
       .slot__outer
         .slot__inner
@@ -23,6 +23,7 @@ include ../mixins/icons
 
       #sunburst.sunburst
         img(src="~@images/sunburst.svg" alt="sunburst")
+    h3#prize-name
     div#round-container
 
     //- button#draw-button.solid-button Draw

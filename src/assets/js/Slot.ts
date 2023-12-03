@@ -1,7 +1,13 @@
+/* eslint-disable no-plusplus */
+interface Winner {
+  number: number;
+  name: string;
+  img: string;
+  prize: string;
+}
 interface WinnerListItem {
-  roundNumber: number;
-  roundTitle: string;
-  winners: any[];
+  setTitle: string;
+  winners: Winner[];
 }
 interface SlotConfigurations {
   /** User configuration for maximum item inside a reel */
@@ -29,9 +35,6 @@ export default class Slot {
 
   /** List of winners */
   private winnerList: WinnerListItem[] = [];
-
-  /** Number of round */
-  private roundNumber: number;
 
   /** Prize Number */
   private prizeNumber: number;
@@ -85,8 +88,7 @@ export default class Slot {
   ) {
     this.nameList = [];
     this.winnerList = [];
-    this.roundNumber = 1;
-    this.prizeNumber = 50;
+    this.prizeNumber = 30;
     this.havePreviousWinner = false;
     this.reelContainer = document.querySelector(reelContainerSelector);
     this.maxReelItems = maxReelItems;
@@ -192,6 +194,60 @@ export default class Slot {
    * @returns Whether the spin is completed successfully
    */
   public async spin(): Promise<boolean> {
+    const prizeData = {
+      prizes: [
+        { number: 1, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM) - 10 SET', img: 'goldbar.png' },
+        { number: 2, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM) - 10 SET', img: 'goldbar.png' },
+        { number: 3, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM) - 10 SET', img: 'goldbar.png' },
+        { number: 4, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM) - 10 SET', img: 'goldbar.png' },
+        { number: 5, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM) - 10 SET', img: 'goldbar.png' },
+        { number: 6, name: 'SONY PS5 DISC VERSION CFI-1218A', img: 'ps5.png' },
+        { number: 7, name: 'DYSON V8 SLIM FLUFFY PLUS CORDLESS VACUUM', img: 'dyson.png' },
+        { number: 8, name: 'APPLE IPAD 10TH GEN/WIFI/64GB/10.9"', img: 'ipad.png' },
+        { number: 9, name: 'ELECTROLUX 8.5KG FRONT LOAD VENTING DRYER EDV854J3WD', img: 'electrolux.png' },
+        { number: 10, name: 'SAMSUNG 50" CRYSTAL UHD 4K SMART TV UA50AU7000KXXM', img: 'tv.png' },
+        { number: 11, name: 'PHILIPS PERFECTCARE 7000 SERIES STEAM GENERATORPSG7130/20', img: '' },
+        { number: 12, name: 'PHILIPS PERFECTCARE 7000 SERIES STEAM GENERATORPSG7130/20', img: '' },
+        { number: 13, name: 'Wireless Headphones', img: '' },
+        { number: 14, name: 'Coffee Maker', img: '' },
+        { number: 15, name: 'Fitness Tracker', img: '' },
+        { number: 16, name: 'GoPro Camera', img: '' },
+        { number: 17, name: 'Amazon Echo', img: '' },
+        { number: 18, name: 'Robot Vacuum', img: '' },
+        { number: 19, name: 'Chromebook', img: '' },
+        { number: 20, name: 'Wireless Charging Pad', img: '' },
+        { number: 21, name: 'Instant Pot', img: '' },
+        { number: 22, name: 'Bluetooth Earbuds', img: '' },
+        { number: 23, name: 'Air Fryer', img: '' },
+        { number: 24, name: 'Nintendo Switch', img: '' },
+        { number: 25, name: 'Smart Thermostat', img: '' },
+        { number: 26, name: 'Digital Camera', img: '' },
+        { number: 27, name: 'Laptop', img: '' },
+        { number: 28, name: 'Wireless Mouse and Keyboard', img: '' },
+        { number: 29, name: 'Portable Projector', img: '' },
+        { number: 30, name: 'VR Headset', img: '' },
+        { number: 31, name: 'Coffee Table Book Collection', img: '' },
+        { number: 32, name: 'Smart Home Hub', img: '' },
+        { number: 33, name: 'Desk Organizer', img: '' },
+        { number: 34, name: 'Wireless Router', img: '' },
+        { number: 35, name: 'Bluetooth Keyboard', img: '' },
+        { number: 36, name: 'Digital Picture Frame', img: '' },
+        { number: 37, name: 'Portable Charger', img: '' },
+        { number: 38, name: 'Smart Doorbell', img: '' },
+        { number: 39, name: 'Electric Toothbrush', img: '' },
+        { number: 40, name: 'Streaming Stick', img: '' },
+        { number: 41, name: 'Wireless Printer', img: '' },
+        { number: 42, name: 'Bluetooth Gaming Controller', img: '' },
+        { number: 43, name: 'SAMSUNG 7.0 KG FULLY AUTO WASHING MACHINEWA70H4000SG/FQ', img: '' },
+        { number: 44, name: 'SAMSUNG 30L GRILL MICROWAVE OVEN HEALTHY GRILL FLY', img: '' },
+        { number: 45, name: 'PHILIPS STEAM IRON BOARD V2 GC7846/86', img: '' },
+        { number: 46, name: 'SAMSUNG B- SERIES SOUNDBAR C450 BLACK', img: '' },
+        { number: 47, name: 'PANASONIC 32" LED HD TV TH-32H410K', img: '' },
+        { number: 48, name: 'SSF CASH VOUCHER (WORTH RM 700)', img: '' },
+        { number: 49, name: 'PHILIPS 6.2L XL ESSENTIAL AIR FRYER WITH NUTRIU APHD9280/91', img: '' },
+        { number: 50, name: 'TTRACING DUO V4 PRO AIR THREADS FABRIC GAMING CHAIR', img: '' }
+      ]
+    };
     if (!this.nameList.length) {
       console.error('Name List is empty. Cannot start spinning.');
       return false;
@@ -217,91 +273,107 @@ export default class Slot {
 
     const fragment = document.createDocumentFragment();
 
-    randomNames.forEach((name) => {
+    randomNames.forEach((name, index, array) => {
       const newReelItem = document.createElement('div');
-      newReelItem.innerHTML = name;
+      // Add a number to the name if it's the last one
+      const newName = index === array.length - 1 ? `#${this.prizeNumber} - ${name}` : name;
+      newReelItem.innerHTML = newName;
       fragment.appendChild(newReelItem);
     });
-    reelContainer.appendChild(fragment);
-    console.log('Displayed items: ', randomNames);
+    if (this.prizeNumber <= 10) {
+      reelContainer.appendChild(fragment);
+    }
+    // console.log('Displayed items: ', randomNames);
+    console.log('Name List: ', this.nameList);
     console.log('Winner: ', randomNames[randomNames.length - 1]);
-    const winner = { number: this.prizeNumber, name: randomNames[randomNames.length - 1], img: '' };
-    const roundIndex = this.getRoundIndex(this.roundNumber);
-    if (!this.winnerList.length) {
-      this.winnerList.push({
-        roundNumber: 1,
-        roundTitle: 'Round 1',
-        winners: [winner]
-      });
-    } else if (this.prizeNumber < 11) {
-      switch (this.prizeNumber) {
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-          winner.img = 'assets/images/prize/goldbar.png';
-          break;
-        case 6:
-          winner.img = 'assets/images/prize/ps5.png';
-          break;
-        case 7:
-          winner.img = 'assets/images/prize/dyson.png';
-          break;
-        case 8:
-          winner.img = 'assets/images/prize/ipad.png';
-          break;
-        case 9:
-          winner.img = 'assets/images/prize/electrolux.png ';
-          break;
-        case 10:
-          winner.img = 'assets/images/prize/tv.png';
-          break;
-        default:
-          break;
-      }
-      // Add the winner to the current round
-      if (this.winnerList[roundIndex].winners.length % 5 === 0) {
-        this.roundNumber += 1;
-        // If divisible by 5, create a new round
-        this.winnerList.unshift({
-          roundNumber: this.roundNumber,
-          roundTitle: `Round ${this.roundNumber}`,
-          winners: [winner]
-        });
-      } else {
-        // Add the winner to the current round
-        this.winnerList[roundIndex].winners.push(winner);
-      }
-    } else if (this.prizeNumber > 10) {
-      if (this.winnerList[roundIndex].winners.length % 5 === 0) {
-        this.roundNumber += 1;
-        // If divisible by 5, create a new round
-        this.winnerList.unshift({
-          roundNumber: this.roundNumber,
-          roundTitle: `Round ${this.roundNumber}`,
-          winners: [winner]
-        });
-      } else {
-        // Add the winner to the current round
-        this.winnerList[roundIndex].winners.push(winner);
-        if (this.winnerList[roundIndex].winners.length === 5) {
-          setTimeout(() => {
-            // Show popup
-            if (this.onShowWinnerPopup) {
-              this.onShowWinnerPopup();
-            }
-          }, 6000);
+
+    // set winners array
+    const winnersWithPrize: Winner[] = [];
+    console.log(this.prizeNumber, 'this.prizeNumber1');
+
+    if (this.prizeNumber > 10) {
+      // Add 10 winners to the array with unique numbers and decrease prizeNumber
+      for (let i = 0; i < 10; i++) {
+        const winner = {
+          number: this.prizeNumber - i, // Decrease prizeNumber
+          name: randomNames[randomNames.length - 1 - i], //
+          img: '',
+          prize: ''
+        };
+        const prize = prizeData.prizes.find((p) => p.number === winner.number);
+        if (prize) {
+          winner.img = `assets/images/prize/${prize.img}`;
+          winner.prize = prize.name;
         }
+        winnersWithPrize.push(winner);
+      }
+    } else {
+      // Add only one winner to the array with a unique number and increment prizeNumber
+      const winner = {
+        number: this.prizeNumber,
+        name: randomNames[randomNames.length - 1],
+        img: '',
+        prize: ''
+      };
+      const prize = prizeData.prizes.find((p) => p.number === this.prizeNumber);
+      console.log(prize, 'prize');
+      if (prize) {
+        winner.img = `assets/images/prize/${prize.img}`;
+        winner.prize = prize.name;
+      }
+      winnersWithPrize.push(winner);
+    }
+    const roundIndex = this.getRoundIndex();
+
+    let title = '';
+    if (this.prizeNumber <= 10) {
+      title = 'Grand Set';
+    } else if (this.prizeNumber <= 50) {
+      title = 'Semi Grand Set';
+    } else if (this.prizeNumber <= 100) {
+      title = 'Set 2';
+    } else if (this.prizeNumber <= 150) {
+      title = 'Set 1';
+    }
+    if (this.prizeNumber === 10) {
+      // Push 1 winner
+      this.winnerList.push({
+        setTitle: title,
+        winners: [winnersWithPrize[0]]
+      });
+    } else if (this.prizeNumber <= 9) {
+      this.winnerList[roundIndex].winners.push(winnersWithPrize[0]);
+    } else {
+      // Push 10 winner
+      this.winnerList.push({
+        setTitle: title,
+        winners: winnersWithPrize
+      });
+      if (this.onShowWinnerPopup) {
+        this.onShowWinnerPopup();
       }
     }
     console.log(this.winnerList, 'this.winnerList');
 
     // Remove winner form name list if necessary
     if (shouldRemoveWinner === true) {
-      this.nameList.splice(this.nameList.findIndex(
-        (name) => name === randomNames[randomNames.length - 1]
-      ), 1);
+      if (this.prizeNumber > 10) {
+        for (let i = 0; i < 10; i++) {
+          this.nameList.splice(
+            this.nameList.findIndex(
+              (name) => name === randomNames[randomNames.length - 1 - i]
+            ),
+            1
+          );
+        }
+      } else {
+        this.nameList.splice(
+          this.nameList.findIndex(
+            (name) => name === randomNames[randomNames.length - 1]
+          ),
+          1
+        );
+      }
     }
 
     console.log('Remaining: ', this.nameList);
@@ -329,12 +401,16 @@ export default class Slot {
       this.onSpinEnd();
     }
 
-    this.prizeNumber -= 1;
+    if (this.prizeNumber > 10) {
+      this.prizeNumber -= 10; // Increment prizeNumber by 10
+    } else {
+      this.prizeNumber -= 1; // Increment prizeNumber by 1
+    }
     return true;
   }
 
   // Function to get the round index
-  getRoundIndex(roundNumber) {
-    return this.winnerList.findIndex((round) => round.roundNumber === roundNumber);
+  getRoundIndex() {
+    return this.winnerList.findIndex((round) => round.setTitle === 'Grand Set');
   }
 }
