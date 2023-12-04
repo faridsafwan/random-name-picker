@@ -38,19 +38,30 @@ import SoundEffects from '@js/SoundEffects';
     && prizeNumber
     && prizeName
     && roundContainer
-  )) {
+  )
+  ) {
     console.error('One or more Element ID is invalid. This is possibly a bug.');
     return;
   }
 
   if (!(confettiCanvas instanceof HTMLCanvasElement)) {
-    console.error('Confetti canvas is not an instance of Canvas. This is possibly a bug.');
+    console.error(
+      'Confetti canvas is not an instance of Canvas. This is possibly a bug.'
+    );
     return;
   }
 
   const soundEffects = new SoundEffects();
   const MAX_REEL_ITEMS = 40;
-  const CONFETTI_COLORS = ['#26ccff', '#a25afd', '#ff5e7e', '#88ff5a', '#fcff42', '#ffa62d', '#ff36ff'];
+  const CONFETTI_COLORS = [
+    '#26ccff',
+    '#a25afd',
+    '#ff5e7e',
+    '#88ff5a',
+    '#fcff42',
+    '#ffa62d',
+    '#ff36ff'
+  ];
   let confettiAnimationId;
 
   /** Confeetti animation instance */
@@ -61,7 +72,9 @@ import SoundEffects from '@js/SoundEffects';
 
   /** Triggers cconfeetti animation until animation is canceled */
   const confettiAnimation = () => {
-    const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
+    const windowWidth = window.innerWidth
+      || document.documentElement.clientWidth
+      || document.getElementsByTagName('body')[0].clientWidth;
     const confettiScale = Math.max(0.5, Math.min(1, windowWidth / 1100));
 
     customConfetti({
@@ -69,7 +82,9 @@ import SoundEffects from '@js/SoundEffects';
       gravity: 0.8,
       spread: 90,
       origin: { y: 0.6 },
-      colors: [CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]],
+      colors: [
+        CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]
+      ],
       scalar: confettiScale
     });
 
@@ -87,14 +102,16 @@ import SoundEffects from '@js/SoundEffects';
   /**  Function to be trigger before spinning */
   const onSpinStart = () => {
     stopWinningAnimation();
-    soundEffects.spin((MAX_REEL_ITEMS - 1) / 10);
+    // soundEffects.spin((MAX_REEL_ITEMS - 1) / 10);
     prizeNumber.textContent = `Lucky Draw #${slot.currentPrizeNumber}`;
     prizeName.textContent = '';
     const imgElement = roundContainer.querySelector('img');
     if (imgElement) {
       imgElement.remove();
     }
-    const lucky = document.getElementById('prize-number') as HTMLDivElement | null;
+    const lucky = document.getElementById(
+      'prize-number'
+    ) as HTMLDivElement | null;
     if (lucky) {
       lucky.style.display = 'block';
     }
@@ -105,7 +122,9 @@ import SoundEffects from '@js/SoundEffects';
     confettiAnimation();
     sunburstSvg.style.display = 'block';
     await soundEffects.win();
-    const lucky = document.getElementById('prize-number') as HTMLDivElement | null;
+    const lucky = document.getElementById(
+      'prize-number'
+    ) as HTMLDivElement | null;
     if (lucky) {
       lucky.style.display = 'none';
     }
@@ -135,7 +154,10 @@ import SoundEffects from '@js/SoundEffects';
       // Create a new img element for the image
       const roundImage = document.createElement('img');
       roundImage.setAttribute('src', latestWinner.img); // Set the image source
-      roundImage.setAttribute('alt', `Prize number ${slot.currentPrizeNumber + 1}`); // Set the alt text
+      roundImage.setAttribute(
+        'alt',
+        `Prize number ${slot.currentPrizeNumber + 1}`
+      ); // Set the alt text
       // roundImage.style.width = '100%'; // Set the width
       roundImage.style.maxHeight = '340px'; // Set the height
       roundContainer.style.zIndex = '1'; // Set z-index
@@ -152,7 +174,9 @@ import SoundEffects from '@js/SoundEffects';
   /** To show ready state */
   const onShowReady = () => {
     onSpinStart();
-    const lucky = document.getElementById('lucky-draw') as HTMLDivElement | null;
+    const lucky = document.getElementById(
+      'lucky-draw'
+    ) as HTMLDivElement | null;
     if (lucky) {
       lucky.style.display = 'inline';
     }
@@ -185,7 +209,9 @@ import SoundEffects from '@js/SoundEffects';
   // Click handler for "Save" button for setting page
   settingsSaveButton.addEventListener('click', () => {
     slot.names = nameListTextArea.value
-      ? nameListTextArea.value.split(/\n/).filter((name) => Boolean(name.trim()))
+      ? nameListTextArea.value
+        .split(/\n/)
+        .filter((name) => Boolean(name.trim()))
       : [];
     slot.shouldRemoveWinnerFromNameList = removeNameFromListCheckbox.checked;
     soundEffects.mute = !enableSoundCheckbox.checked;
@@ -277,6 +303,7 @@ import SoundEffects from '@js/SoundEffects';
           isReady = true;
           return;
         }
+        soundEffects.spin((MAX_REEL_ITEMS - 1) / 10);
         slot.spin();
 
         // Disable input for 3 seconds (3000 milliseconds)
@@ -305,28 +332,45 @@ import SoundEffects from '@js/SoundEffects';
       }
     });
   });
+  // login
+  const urlLogin = 'http://159.89.198.242:2052/login.php?u=mlng5th&p=dec5th';
+  fetch(urlLogin)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data, 'login'); // Handle the retrieved data here
+    })
+    .catch((error) => console.error('Error:', error));
 
-  slot.names = [
-    'Annabella Ak Peter Dien/Ardini Anna Abdullah',
-    'Mohamed Syazwan Abdullah @ Laga',
-    'Awangku Mohd Hazriq Fadzly bin Awg Ahmad',
-    'Mohammad Khairul bin Abu Bakar ',
-    'Maximilian Kolbe Saribu anak Raymond',
-    'Mc Cartney Issac Garston anak Christoper',
-    'Jacqueline Janta anak Boniface Intang',
-    'Ayunni Maisarah Binti Rosminuddin',
-    'Danel Hakim bin Mohammad West',
-    'Mohammad Khairusrizuan bin Khasim',
-    'Awang Mantaha bin Awang Mostapha',
-    'Mohammad Asmawie Bin Mohamed Osman',
-    'Mohammad Syaiful Yazan Bin Nakhoda',
-    'Reidson Ridzan Anak Leonard Lonod',
-    'Genevieve Melia AK George Gladwyns Tait',
-    'Muhammad Iman Hafiz Bin Muhammad Sazali',
-    'Abang Yusrin Hakim bin Abang Drahman',
-    'Abang Amirudin bin Abang Abdul Gapor',
-    'Helton Sayang anak Boniface Entalang',
-    'Awang Zekryanto bin Awang Bujang',
-    'Dygku Nuraysyah Lee Bt. Awang Jidel'
-  ];
+  const url = 'http://159.89.198.242:2052/guest_all.php?event=mlng5th';
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data, 'guest'); // Handle the retrieved data here
+      slot.names = data.payload;
+    })
+    .catch((error) => console.error('Error:', error));
+
+  // slot.names = [
+  //   'Annabella Ak Peter Dien/Ardini Anna Abdullah',
+  //   'Mohamed Syazwan Abdullah @ Laga',
+  //   'Awangku Mohd Hazriq Fadzly bin Awg Ahmad',
+  //   'Mohammad Khairul bin Abu Bakar ',
+  //   'Maximilian Kolbe Saribu anak Raymond',
+  //   'Mc Cartney Issac Garston anak Christoper',
+  //   'Jacqueline Janta anak Boniface Intang',
+  //   'Ayunni Maisarah Binti Rosminuddin',
+  //   'Danel Hakim bin Mohammad West',
+  //   'Mohammad Khairusrizuan bin Khasim',
+  //   'Awang Mantaha bin Awang Mostapha',
+  //   'Mohammad Asmawie Bin Mohamed Osman',
+  //   'Mohammad Syaiful Yazan Bin Nakhoda',
+  //   'Reidson Ridzan Anak Leonard Lonod',
+  //   'Genevieve Melia AK George Gladwyns Tait',
+  //   'Muhammad Iman Hafiz Bin Muhammad Sazali',
+  //   'Abang Yusrin Hakim bin Abang Drahman',
+  //   'Abang Amirudin bin Abang Abdul Gapor',
+  //   'Helton Sayang anak Boniface Entalang',
+  //   'Awang Zekryanto bin Awang Bujang',
+  //   'Dygku Nuraysyah Lee Bt. Awang Jidel'
+  // ];
 })();
