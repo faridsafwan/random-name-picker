@@ -474,7 +474,7 @@ export default class Slot {
 
     console.log('Remaining: ', this.nameList);
     const nameList = JSON.stringify(this.nameList);
-    localStorage.setItem('Remaining', nameList);
+    localStorage.setItem('remaining', nameList);
 
     // Play the spin animation
     const animationPromise = new Promise((resolve) => {

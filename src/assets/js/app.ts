@@ -357,7 +357,7 @@ import SoundEffects from '@js/SoundEffects';
     })
     .catch((error) => console.error('Error:', error));
 
-  const storedRemainingData = localStorage.getItem('Remaining');
+  const storedRemainingData = localStorage.getItem('remaining');
   if (storedRemainingData !== null) {
     // Parse the JSON string back to a JavaScript object
     const remainingData = JSON.parse(storedRemainingData);
