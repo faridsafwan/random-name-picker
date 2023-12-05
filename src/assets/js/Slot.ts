@@ -6,7 +6,6 @@ interface Winner {
   prize: string;
 }
 interface WinnerListItem {
-  setTitle: string;
   winners: Winner[];
 }
 interface SlotConfigurations {
@@ -422,30 +421,28 @@ export default class Slot {
       }
       winnersWithPrize.push(winner);
     }
-    const roundIndex = this.getRoundIndex();
+    // const roundIndex = this.getRoundIndex();
 
-    let title = '';
-    if (this.prizeNumber <= 10) {
-      title = 'GRAND SET';
-    } else if (this.prizeNumber <= 50) {
-      title = 'SEMI GRAND SET';
-    } else if (this.prizeNumber <= 100) {
-      title = 'SET 2';
-    } else if (this.prizeNumber <= 150) {
-      title = 'SET 1';
-    }
+    // let title = '';
+    // if (this.prizeNumber <= 10) {
+    //   title = 'GRAND SET';
+    // } else if (this.prizeNumber <= 50) {
+    //   title = 'SEMI GRAND SET';
+    // } else if (this.prizeNumber <= 100) {
+    //   title = 'SET 2';
+    // } else if (this.prizeNumber <= 150) {
+    //   title = 'SET 1';
+    // }
     if (this.prizeNumber === 10) {
       // Push 1 winner
       this.winnerList.push({
-        setTitle: title,
         winners: [winnersWithPrize[0]]
       });
     } else if (this.prizeNumber <= 9) {
-      this.winnerList[roundIndex].winners.push(winnersWithPrize[0]);
+      this.winnerList[this.winnerList.length - 1].winners.push(winnersWithPrize[0]);
     } else {
       // Push 10 winner
       this.winnerList.push({
-        setTitle: title,
         winners: winnersWithPrize
       });
       if (this.onShowWinnerPopup) {
@@ -509,7 +506,7 @@ export default class Slot {
   }
 
   // Function to get the round index
-  getRoundIndex() {
-    return this.winnerList.findIndex((round) => round.setTitle === 'GRAND SET');
-  }
+  // getRoundIndex() {
+  //   return this.winnerList.findIndex((round) => round.setTitle === 'GRAND SET');
+  // }
 }

@@ -128,9 +128,27 @@ import SoundEffects from '@js/SoundEffects';
       lucky.style.display = 'none';
     }
     onShowPrizeName();
+    console.log(slot.winner[slot.winner.length - 1], 'slot.winner');
+
+    // Convert the data to a JSON string
+    const winnersDataString = JSON.stringify(slot.winner);
+
+    // Save the data to localStorage
+    localStorage.setItem('winners', winnersDataString);
 
     // save data here by call
     // use fetch post
+    const apiUrl = 'https://mlng-best-dress-backend.onrender.com/winners/addNewWinners';
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(slot.winner[slot.winner.length - 1])
+    })
+      .then((response) => response.json())
+      .then((data) => console.log('New winners added:', data))
+      .catch((error) => console.error('Error adding winners:', error));
   };
 
   /** To open the winner page */
@@ -229,9 +247,9 @@ import SoundEffects from '@js/SoundEffects';
     winnerContent.innerHTML = ''; // Clear previous content
     // Iterate through rounds in the winner data
     // Create a new label element for the round
-    const setHeading = document.createElement('h2');
-    setHeading.setAttribute('for', `name-list-${setData.number}`);
-    setHeading.textContent = setData.setTitle;
+    // const setHeading = document.createElement('h2');
+    // setHeading.setAttribute('for', `name-list-${setData.number}`);
+    // setHeading.textContent = setData.setTitle;
 
     // Create a new table element
     const table = document.createElement('table');
