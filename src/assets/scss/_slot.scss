@@ -57,7 +57,7 @@
   position: relative;
   color: white;
   &__outer {
-    width: $slot-width;
+    // width: $slot-width;
     height: $slot-height;
     padding: $slot-border-width;
     margin: 0 auto;
@@ -112,7 +112,7 @@
 
   > div {
     height: $reel-item-height;
-    font-size: 2.75rem;
+    font-size: 2.2rem;
     font-weight: bold;
     text-align: center;
     line-height: $reel-item-height;
@@ -233,7 +233,7 @@
 
   &__panel {
     position: absolute; /* Change fixed to absolute */
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%); /* Center the panel */
     z-index: $z-index-settings;
