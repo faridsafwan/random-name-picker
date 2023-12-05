@@ -229,9 +229,9 @@ import SoundEffects from '@js/SoundEffects';
     winnerContent.innerHTML = ''; // Clear previous content
     // Iterate through rounds in the winner data
     // Create a new label element for the round
-    const setLabel = document.createElement('label');
-    setLabel.setAttribute('for', `name-list-${setData.number}`);
-    setLabel.textContent = setData.setTitle;
+    const setHeading = document.createElement('h2');
+    setHeading.setAttribute('for', `name-list-${setData.number}`);
+    setHeading.textContent = setData.setTitle;
 
     // Create a new table element
     const table = document.createElement('table');
@@ -265,7 +265,7 @@ import SoundEffects from '@js/SoundEffects';
     });
 
     // Append the label and table to the winnerContent
-    winnerContent.appendChild(setLabel);
+    // winnerContent.appendChild(setHeading);
     winnerContent.appendChild(table);
   };
 
