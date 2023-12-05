@@ -373,11 +373,10 @@ export default class Slot {
 
     const fragment = document.createDocumentFragment();
 
-    randomNames.forEach((name, index, array) => {
+    randomNames.forEach((name) => {
       const newReelItem = document.createElement('div');
       // Add a number to the name if it's the last one
-      const newName = index === array.length - 1 ? `#${this.prizeNumber} - ${name}` : name;
-      newReelItem.innerHTML = newName;
+      newReelItem.innerHTML = name;
       fragment.appendChild(newReelItem);
     });
     if (this.prizeNumber <= 10) {
@@ -427,13 +426,13 @@ export default class Slot {
 
     let title = '';
     if (this.prizeNumber <= 10) {
-      title = 'Grand Set';
+      title = 'GRAND SET';
     } else if (this.prizeNumber <= 50) {
-      title = 'Semi Grand Set';
+      title = 'SEMI GRAND SET';
     } else if (this.prizeNumber <= 100) {
-      title = 'Set 2';
+      title = 'SET 2';
     } else if (this.prizeNumber <= 150) {
-      title = 'Set 1';
+      title = 'SET 1';
     }
     if (this.prizeNumber === 10) {
       // Push 1 winner
@@ -511,6 +510,6 @@ export default class Slot {
 
   // Function to get the round index
   getRoundIndex() {
-    return this.winnerList.findIndex((round) => round.setTitle === 'Grand Set');
+    return this.winnerList.findIndex((round) => round.setTitle === 'GRAND SET');
   }
 }

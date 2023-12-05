@@ -17,7 +17,7 @@ import SoundEffects from '@js/SoundEffects';
   const nameListTextArea = document.getElementById('name-list') as HTMLTextAreaElement | null;
   const removeNameFromListCheckbox = document.getElementById('remove-from-list') as HTMLInputElement | null;
   const enableSoundCheckbox = document.getElementById('enable-sound') as HTMLInputElement | null;
-  const prizeNumber = document.getElementById('prize-number') as HTMLButtonElement | null;
+  // const prizeNumber = document.getElementById('prize-number') as HTMLButtonElement | null;
   const prizeName = document.getElementById('prize-name') as HTMLButtonElement | null;
   const roundContainer = document.getElementById('round-container') as HTMLButtonElement | null;
 
@@ -35,7 +35,6 @@ import SoundEffects from '@js/SoundEffects';
     && nameListTextArea
     && removeNameFromListCheckbox
     && enableSoundCheckbox
-    && prizeNumber
     && prizeName
     && roundContainer
   )
@@ -103,7 +102,7 @@ import SoundEffects from '@js/SoundEffects';
   const onSpinStart = () => {
     stopWinningAnimation();
     // soundEffects.spin((MAX_REEL_ITEMS - 1) / 10);
-    prizeNumber.textContent = `Lucky Draw #${slot.currentPrizeNumber}`;
+    // prizeNumber.textContent = `Lucky Draw #${slot.currentPrizeNumber}`;
     prizeName.textContent = '';
     const imgElement = roundContainer.querySelector('img');
     if (imgElement) {
@@ -129,6 +128,9 @@ import SoundEffects from '@js/SoundEffects';
       lucky.style.display = 'none';
     }
     onShowPrizeName();
+
+    // save data here by call
+    // use fetch post
   };
 
   /** To open the winner page */
