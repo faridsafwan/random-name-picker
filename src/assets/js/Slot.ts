@@ -87,7 +87,7 @@ export default class Slot {
   ) {
     this.nameList = [];
     this.winnerList = [];
-    this.prizeNumber = 10;
+    this.prizeNumber = 20;
     this.havePreviousWinner = false;
     this.reelContainer = document.querySelector(reelContainerSelector);
     this.maxReelItems = maxReelItems;
@@ -473,6 +473,8 @@ export default class Slot {
     }
 
     console.log('Remaining: ', this.nameList);
+    const nameList = JSON.stringify(this.nameList);
+    localStorage.setItem('Remaining', nameList);
 
     // Play the spin animation
     const animationPromise = new Promise((resolve) => {
