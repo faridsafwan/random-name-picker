@@ -76,7 +76,7 @@ export default class Slot {
    */
   constructor(
     {
-      maxReelItems = 25,
+      maxReelItems = 30,
       removeWinner = true,
       reelContainerSelector,
       onSpinStart,
@@ -195,15 +195,15 @@ export default class Slot {
   public async spin(): Promise<boolean> {
     const prizeData = {
       prizes: [
-        { number: 1, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM) - 10 SET', img: 'goldbar.png' },
-        { number: 2, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM) - 10 SET', img: 'goldbar.png' },
-        { number: 3, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM) - 10 SET', img: 'goldbar.png' },
-        { number: 4, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM) - 10 SET', img: 'goldbar.png' },
-        { number: 5, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM) - 10 SET', img: 'goldbar.png' },
+        { number: 1, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM)', img: 'newgoldbar.png' },
+        { number: 2, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM)', img: 'newgoldbar.png' },
+        { number: 3, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM)', img: 'newgoldbar.png' },
+        { number: 4, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM)', img: 'newgoldbar.png' },
+        { number: 5, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM)', img: 'newgoldbar.png' },
         { number: 6, name: 'SONY PS5 DISC VERSION CFI-1218A', img: 'ps5.png' },
         { number: 7, name: 'DYSON V8 SLIM FLUFFY PLUS CORDLESS VACUUM', img: 'dyson.png' },
-        { number: 8, name: 'APPLE IPAD 10TH GEN/WIFI/64GB/10.9"', img: 'ipad.png' },
-        { number: 9, name: 'ELECTROLUX 8.5KG FRONT LOAD VENTING DRYER EDV854J3WD', img: 'electrolux.png' },
+        { number: 8, name: 'APPLE IPAD 10TH GEN/WIFI/64GB/10.9"', img: 'ipad-2.png' },
+        { number: 9, name: 'ELECTROLUX 8.5KG FRONT LOAD VENTING DRYER EDV854J3WD', img: 'electrolux-2.png' },
         { number: 10, name: 'SAMSUNG 50" CRYSTAL UHD 4K SMART TV UA50AU7000KXXM', img: 'tv.png' },
         { number: 11, name: 'PHILIPS PERFECTCARE 7000 SERIES STEAM GENERATORPSG7130/20', img: '' },
         { number: 12, name: 'PHILIPS PERFECTCARE 7000 SERIES STEAM GENERATORPSG7130/20', img: '' },

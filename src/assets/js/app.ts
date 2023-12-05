@@ -51,7 +51,7 @@ import SoundEffects from '@js/SoundEffects';
   }
 
   const soundEffects = new SoundEffects();
-  const MAX_REEL_ITEMS = 40;
+  const MAX_REEL_ITEMS = 30;
   const CONFETTI_COLORS = [
     '#26ccff',
     '#a25afd',
@@ -135,20 +135,6 @@ import SoundEffects from '@js/SoundEffects';
 
     // Save the data to localStorage
     localStorage.setItem('winners', winnersDataString);
-
-    // save data here by call
-    // use fetch post
-    const apiUrl = 'https://mlng-best-dress-backend.onrender.com/winners/addNewWinners';
-    fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(slot.winner[slot.winner.length - 1])
-    })
-      .then((response) => response.json())
-      .then((data) => console.log('New winners added:', data))
-      .catch((error) => console.error('Error adding winners:', error));
   };
 
   /** To open the winner page */
