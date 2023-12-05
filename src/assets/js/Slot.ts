@@ -87,7 +87,7 @@ export default class Slot {
   ) {
     this.nameList = [];
     this.winnerList = [];
-    this.prizeNumber = 20;
+    this.prizeNumber = 150;
     this.havePreviousWinner = false;
     this.reelContainer = document.querySelector(reelContainerSelector);
     this.maxReelItems = maxReelItems;
