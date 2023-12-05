@@ -87,7 +87,7 @@ export default class Slot {
   ) {
     this.nameList = [];
     this.winnerList = [];
-    this.prizeNumber = 150;
+    this.prizeNumber = 10;
     this.havePreviousWinner = false;
     this.reelContainer = document.querySelector(reelContainerSelector);
     this.maxReelItems = maxReelItems;
@@ -195,11 +195,11 @@ export default class Slot {
   public async spin(): Promise<boolean> {
     const prizeData = {
       prizes: [
-        { number: 1, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM)', img: 'newgoldbar.png' },
-        { number: 2, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM)', img: 'newgoldbar.png' },
-        { number: 3, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM)', img: 'newgoldbar.png' },
-        { number: 4, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM)', img: 'newgoldbar.png' },
-        { number: 5, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (5, 1 & 1 GRAM)', img: 'newgoldbar.png' },
+        { number: 1, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
+        { number: 2, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
+        { number: 3, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
+        { number: 4, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
+        { number: 5, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
         { number: 6, name: 'SONY PS5 DISC VERSION CFI-1218A', img: 'ps5.png' },
         { number: 7, name: 'DYSON V8 SLIM FLUFFY PLUS CORDLESS VACUUM', img: 'dyson.png' },
         { number: 8, name: 'APPLE IPAD 10TH GEN/WIFI/64GB/10.9"', img: 'ipad-2.png' },
