@@ -128,7 +128,6 @@ import SoundEffects from '@js/SoundEffects';
       lucky.style.display = 'none';
     }
     onShowPrizeName();
-    console.log(slot.winner[slot.winner.length - 1], 'slot.winner');
 
     // Convert the data to a JSON string
     const winnersDataString = JSON.stringify(slot.winner);
@@ -310,7 +309,7 @@ import SoundEffects from '@js/SoundEffects';
           return;
         }
         soundEffects.spin((MAX_REEL_ITEMS - 1) / 10);
-        slot.spin();
+        slot.spin(false);
 
         // Disable input for 3 seconds (3000 milliseconds)
         disableInputForSeconds(7000);
@@ -336,6 +335,23 @@ import SoundEffects from '@js/SoundEffects';
           document.exitFullscreen();
         }
       }
+      if (event.key === 'p') {
+        // Check if input is disabled
+        if (isInputDisabled) {
+          return; // Ignore key press if input is disabled
+        }
+        if (!slot.names.length) {
+          onSettingsOpen();
+          return;
+        }
+        if (slot.currentPrizeNumber <= 10) {
+          soundEffects.spin((MAX_REEL_ITEMS - 1) / 10);
+          slot.spin(true);
+        }
+
+        // Disable input for 3 seconds (3000 milliseconds)
+        disableInputForSeconds(7000);
+      }
     });
   });
   // login
@@ -357,42 +373,72 @@ import SoundEffects from '@js/SoundEffects';
     })
     .catch((error) => console.error('Error:', error));
 
-  const storedRemainingData = localStorage.getItem('remaining');
-  if (storedRemainingData !== null) {
-    // Parse the JSON string back to a JavaScript object
-    const remainingData = JSON.parse(storedRemainingData);
-
-    // Now, storedWinnersData contains the original data in its original format
-    slot.names = remainingData;
-
-    console.log(`Remaining Data: ${remainingData}`);
-  } else {
-    slot.names = [
-      'AHMAT BIN MATKASSAN',
-      'LEONARD MERESIN AK NYALANG',
-      'ROBINSON ROBERT',
-      'RALEXIS ANAK RINGGIT@GAWAN',
-      'JOHNICAL EMPENI ANAK ENGKAS',
-      'MOHD RIDHWAN BIN ABDUL RAHIM',
-      'MOHD FARID IZZAT B IKHWAN',
-      'NORSYUHADA BT MORSHIDI',
-      'NGU ING SING',
-      'YEE CHIN FOO',
-      'ALICECIANA LIVAN LUHAT',
-      'JEFFREY AK SUDOK',
-      'MUHAMMAD JAUHARI BIN ABDULLAH',
-      'MOHAMAD NOOR BIN MAHALI',
-      'NUR SYAFIQA BINTI GHADAFI',
-      'LIONG WOEI HUA',
-      'KHO KHAI KHEE',
-      'NASIRUDIN BIN ISMAIL',
-      'TAN SZE MUN',
-      'JAYKANESH SHAMUGAM',
-      'REZZA BIN MAKDAM',
-      'MOHD FAIZAL BIN MASHOR',
-      'FUNG KIM CHUEN',
-      'RAKA LUTAP',
-      'FELIX BADA ANAK MATHEW'
-    ];
-  }
+  slot.names = [
+    'MOHAMED SYAZWAN ABDULLAH @ LAGA',
+    'AMIR HAMZAH GHAZALI',
+    'JAMURI ZEN',
+    'MOHAMMAD FARIZ ROSE DEE',
+    'KHAIRUL ARIFFIN IDRIS',
+    'OSMAN BUNGGAL',
+    'NUR AYUNI PUSTABEL',
+    'ARAFFIE IGAT',
+    'AZLIN YUSOF',
+    'ABG AZIAN B ABG MOK ',
+    'SUHAILLA BINTI PEN',
+    'MARYA LUHAT',
+    'FATLLY BIN BOLI',
+    'VINOD A/L HARIRAM',
+    'AARON TAN CHI WU',
+    'ADELINE MARCIA ALONG ANAK MICHAEL',
+    'AWANGKU MOHD HAZRIQ FADZLY BIN AWG AHMAD',
+    'CHRISTIE USUN YUSUP NGAU',
+    'DEBRA ANAK EDWIN',
+    'HELINA SARANI ANAK SABA',
+    'ISKANDAR BIN SENDI',
+    'JURITA ANAK AMBOK',
+    'KARLOS GANING ANAK DONALD',
+    'SHAHRUL NIZAM BIN JULAIHI',
+    'VICTORIA SOFIA ANAK FRANCIS VICTOR',
+    'MOHD ISMAWIE IDRIS',
+    'M AZLAN AHMAD FUAD',
+    'AARON TUSAN TRANG',
+    'ABANG AMIRUDIN BIN ABANG ABDUL GAPOR',
+    'ABANG YUSRIN HAKIM BIN ABANG DRAHMAN',
+    'ABDUL ADI BIN ABDUL RAHIM',
+    'ABDUL AMZAR BIN AZHAR',
+    'ABDUL HAFIDZ BIN BORHAN',
+    'ABDUL LATIF BIN RAHIM',
+    'ABDUL LATIFF BIN ABDUL RANI',
+    'ABDUL MUIM BIN ABDUL SANI',
+    'ABDUL RAHMAN BIN RAMLI',
+    'ABDUL RAHMAN BIN ZAKARIA',
+    'ABDUL SHAFIQ BIN HASSAN',
+    'ABI SAFWAN BIN UMARUL MUKHTAR',
+    'ABUK JALAI',
+    'AHMAT BIN MATKASSAN',
+    'LEONARD MERESIN AK NYALANG',
+    'ROBINSON ROBERT',
+    'RALEXIS ANAK RINGGIT@GAWAN',
+    'JOHNICAL EMPENI ANAK ENGKAS',
+    'MOHD RIDHWAN BIN ABDUL RAHIM',
+    'MOHD FARID IZZAT B IKHWAN',
+    'NORSYUHADA BT MORSHIDI',
+    'NGU ING SING',
+    'YEE CHIN FOO',
+    'ALICECIANA LIVAN LUHAT',
+    'JEFFREY AK SUDOK',
+    'MUHAMMAD JAUHARI BIN ABDULLAH',
+    'MOHAMAD NOOR BIN MAHALI',
+    'NUR SYAFIQA BINTI GHADAFI',
+    'LIONG WOEI HUA',
+    'KHO KHAI KHEE',
+    'NASIRUDIN BIN ISMAIL',
+    'TAN SZE MUN',
+    'JAYKANESH SHAMUGAM',
+    'REZZA BIN MAKDAM',
+    'MOHD FAIZAL BIN MASHOR',
+    'FUNG KIM CHUEN',
+    'RAKA LUTAP',
+    'FELIX BADA ANAK MATHEW'
+  ];
 })();

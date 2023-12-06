@@ -192,7 +192,7 @@ export default class Slot {
    * Function for spinning the slot
    * @returns Whether the spin is completed successfully
    */
-  public async spin(): Promise<boolean> {
+  public async spin(isRedraw): Promise<boolean> {
     const prizeData = {
       prizes: [
         { number: 1, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
@@ -351,6 +351,21 @@ export default class Slot {
       console.error('Name List is empty. Cannot start spinning.');
       return false;
     }
+    // Increase back the prize number
+    // Remove previous winner
+    if (isRedraw) {
+      if (this.prizeNumber >= 10) {
+        this.prizeNumber += 10;
+        this.winnerList.pop();
+      } else if (this.prizeNumber === 9) {
+        this.prizeNumber += 1;
+        this.winnerList.pop();
+      } else if (this.prizeNumber < 9) {
+        this.prizeNumber += 1;
+        this.winnerList[this.winnerList.length - 1].winners.pop();
+      }
+    }
+    console.log(this.prizeNumber, 'reset prize number');
 
     if (this.onSpinStart) {
       this.onSpinStart();
@@ -374,7 +389,6 @@ export default class Slot {
 
     randomNames.forEach((name) => {
       const newReelItem = document.createElement('div');
-      // Add a number to the name if it's the last one
       newReelItem.innerHTML = name;
       fragment.appendChild(newReelItem);
     });
@@ -387,7 +401,7 @@ export default class Slot {
 
     // set winners array
     const winnersWithPrize: Winner[] = [];
-    console.log(this.prizeNumber, 'this.prizeNumber1');
+    console.log(this.prizeNumber, 'prizeNumber');
 
     if (this.prizeNumber > 10) {
       // Add 10 winners to the array with unique numbers and decrease prizeNumber
@@ -414,25 +428,13 @@ export default class Slot {
         prize: ''
       };
       const prize = prizeData.prizes.find((p) => p.number === this.prizeNumber);
-      console.log(prize, 'prize');
       if (prize) {
         winner.img = `assets/images/prize/${prize.img}`;
         winner.prize = prize.name;
       }
       winnersWithPrize.push(winner);
     }
-    // const roundIndex = this.getRoundIndex();
 
-    // let title = '';
-    // if (this.prizeNumber <= 10) {
-    //   title = 'GRAND SET';
-    // } else if (this.prizeNumber <= 50) {
-    //   title = 'SEMI GRAND SET';
-    // } else if (this.prizeNumber <= 100) {
-    //   title = 'SET 2';
-    // } else if (this.prizeNumber <= 150) {
-    //   title = 'SET 1';
-    // }
     if (this.prizeNumber === 10) {
       // Push 1 winner
       this.winnerList.push({
@@ -506,9 +508,4 @@ export default class Slot {
     }
     return true;
   }
-
-  // Function to get the round index
-  // getRoundIndex() {
-  //   return this.winnerList.findIndex((round) => round.setTitle === 'GRAND SET');
-  // }
 }
