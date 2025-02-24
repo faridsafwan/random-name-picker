@@ -15,14 +15,14 @@ interface SlotConfigurations {
   removeWinner?: boolean;
   /** User configuration for element selector which reel items should append to */
   reelContainerSelector: string;
+  /** Start of Grand Prize */
+  grandPrizeStartNo: number;
   /** User configuration for callback function that runs before spinning reel */
   onSpinStart?: () => void;
   /** User configuration for callback function that runs after spinning reel */
   onSpinEnd?: () => void;
-
   /** User configuration for callback function that runs after user updates the name list */
   onNameListChanged?: () => void;
-
   /** User configuration to show winner popup */
   onShowWinnerPopup?: () => void;
 }
@@ -37,6 +37,9 @@ export default class Slot {
 
   /** Prize Number */
   private prizeNumber: number;
+
+  /** Start of Grand Prize */
+  grandPrizeStartNo: number;
 
   /** Whether there is a previous winner element displayed in reel */
   private havePreviousWinner: boolean;
@@ -70,6 +73,7 @@ export default class Slot {
    * @param maxReelItems  Maximum item inside a reel
    * @param removeWinner  Whether winner should be removed from name list
    * @param reelContainerSelector  The element ID of reel items to be appended
+   * @param maxReelItems  Maximum item inside a reel
    * @param onSpinStart  Callback function that runs before spinning reel
    * @param onNameListChanged  Callback function that runs when user updates the name list
    * @param onShowWinnerPopup Callback function that show winner popup
@@ -79,6 +83,7 @@ export default class Slot {
       maxReelItems = 30,
       removeWinner = true,
       reelContainerSelector,
+      grandPrizeStartNo,
       onSpinStart,
       onSpinEnd,
       onNameListChanged,
@@ -87,7 +92,8 @@ export default class Slot {
   ) {
     this.nameList = [];
     this.winnerList = [];
-    this.prizeNumber = 150;
+    this.prizeNumber = 8;
+    this.grandPrizeStartNo = grandPrizeStartNo;
     this.havePreviousWinner = false;
     this.reelContainer = document.querySelector(reelContainerSelector);
     this.maxReelItems = maxReelItems;
@@ -195,156 +201,14 @@ export default class Slot {
   public async spin(isRedraw): Promise<boolean> {
     const prizeData = {
       prizes: [
-        { number: 1, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
-        { number: 2, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
-        { number: 3, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
-        { number: 4, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
-        { number: 5, name: 'HABIB JEWELS - GOLD BAR 999.9 (SONGKET EDITION) (7 GRAM)', img: 'newgoldbar.png' },
-        { number: 6, name: 'SONY PS5 DISC VERSION CFI-1218A', img: 'ps5.png' },
-        { number: 7, name: 'DYSON V8 SLIM FLUFFY PLUS CORDLESS VACUUM', img: 'dyson.png' },
-        { number: 8, name: 'APPLE IPAD 10TH GEN/WIFI/64GB/10.9"', img: 'ipad-2.png' },
-        { number: 9, name: 'ELECTROLUX 8.5KG FRONT LOAD VENTING DRYER EDV854J3WD', img: 'electrolux-2.png' },
-        { number: 10, name: 'SAMSUNG 50" CRYSTAL UHD 4K SMART TV UA50AU7000KXXM', img: 'tv.png' },
-        { number: 11, name: 'PHILIPS PERFECTCARE 7000 SERIES STEAM GENERATORPSG7130/20', img: '' },
-        { number: 12, name: 'PHILIPS PERFECTCARE 7000 SERIES STEAM GENERATORPSG7130/20', img: '' },
-        { number: 13, name: 'SWITCH VOUCHER (WORTH RM 1500.00)', img: '' },
-        { number: 14, name: 'SWITCH VOUCHER (WORTH RM 1500.00)', img: '' },
-        { number: 15, name: 'SAMSUNG GALAXY A34 5G 8GB + 256GB GRAPHITE', img: '' },
-        { number: 16, name: 'SAMSUNG GALAXY A34 5G 8GB + 256GB GRAPHITE', img: '' },
-        { number: 17, name: 'SONY WIRELESS NOISE CANCELLING HEADPHONES WH1000XM5', img: '' },
-        { number: 18, name: 'SONY WIRELESS NOISE CANCELLING HEADPHONES WH1000XM5', img: '' },
-        { number: 19, name: 'SAMSUNG SOUND TOWER MX-T70/XM', img: '' },
-        { number: 20, name: 'SAMSUNG SOUND TOWER MX-T70/XM', img: '' },
-        { number: 21, name: 'HP 15-FD0182TU INTEL PROCESSOR N100/8GB DDR4 3200/512GB PCIE/UHD/15.6" FHD/W11H/HNS/1YW/WARM GOLD', img: '' },
-        { number: 22, name: 'HP 15-FD0182TU INTEL PROCESSOR N100/8GB DDR4 3200/512GB PCIE/UHD/15.6" FHD/W11H/HNS/1YW/WARM GOLD', img: '' },
-        { number: 23, name: 'SAMSUNG 60M2 SMART AIR PURIFIER AX46BG5000GSME', img: '' },
-        { number: 24, name: 'SAMSUNG 60M2 SMART AIR PURIFIER AX46BG5000GSME', img: '' },
-        { number: 25, name: 'SAMSUNG 11KG TOP LOAD WASHER WITH ECOBUBBLE', img: '' },
-        { number: 26, name: 'SAMSUNG 11KG TOP LOAD WASHER WITH ECOBUBBLE', img: '' },
-        { number: 27, name: 'NINTENDO SWITCH OLED', img: '' },
-        { number: 28, name: 'NINTENDO SWITCH OLED', img: '' },
-        { number: 29, name: 'MIDEA 8.0KG CONDENSER CLOTHES DRYER MD-C8800', img: '' },
-        { number: 30, name: 'MIDEA 8.0KG CONDENSER CLOTHES DRYER MD-C8800', img: '' },
-        { number: 31, name: 'SAMSUNG GALAXY WATCH 6 CLASSIC 43MM BLACK', img: '' },
-        { number: 32, name: 'SAMSUNG GALAXY WATCH 6 CLASSIC 43MM BLACK', img: '' },
-        { number: 33, name: 'SAMSUNG POWERBOT VACUUM VR05R5050WK', img: '' },
-        { number: 34, name: 'SAMSUNG POWERBOT VACUUM VR05R5050WK', img: '' },
-        { number: 35, name: 'SAMSUNG JET70 MULTI POWERSTICK VACUUM CLEANER', img: '' },
-        { number: 36, name: 'SAMSUNG JET70 MULTI POWERSTICK VACUUM CLEANER', img: '' },
-        { number: 37, name: 'SAMSUNG 2 DOOR REFRIGERATOR 270L RT22FARADSA/ME', img: '' },
-        { number: 38, name: 'SAMSUNG 2 DOOR REFRIGERATOR 270L RT22FARADSA/ME', img: '' },
-        { number: 39, name: 'APPLE WATCH SE - STARLIGHT', img: '' },
-        { number: 40, name: 'APPLE WATCH SE - STARLIGHT', img: '' },
-        { number: 41, name: 'FUJIFILM INSTAX MINI FILM EVO (+5 BOX FILMS)', img: '' },
-        { number: 42, name: 'FUJIFILM INSTAX MINI FILM EVO (+5 BOX FILMS)', img: '' },
-        { number: 43, name: '(COACH) TABBY 12', img: '' },
-        { number: 44, name: '(COACH) CHARTER BELT BAG 7 IN SIGNATURE CANVAS', img: '' },
-        { number: 45, name: 'ELECTRIC SCOOTER', img: '' },
-        { number: 46, name: 'AIRCOND SAMSUNG', img: '' },
-        { number: 47, name: 'APPLE AIRPODS PRO 2TH GEN', img: '' },
-        { number: 48, name: 'APPLE AIRPODS PRO 2TH GEN', img: '' },
-        { number: 49, name: 'MIDEA MUF-208SD UPRIGHT FREEZER', img: '' },
-        { number: 50, name: 'MIDEA MUF-208SD UPRIGHT FREEZER', img: '' },
-        { number: 51, name: 'PHILIPS COOKING BLENDER HR 2099', img: '' },
-        { number: 52, name: 'PHILIPS COOKING BLENDER HR 2099', img: '' },
-        { number: 53, name: 'SAMSUNG GALAXY WATCH 5 40MM, GRAY, SM-R900NZAAXME', img: '' },
-        { number: 54, name: 'SAMSUNG GALAXY WATCH 5 40MM, GRAY, SM-R900NZAAXME', img: '' },
-        { number: 55, name: 'SSF VOUCHER (WORTH RM 750.00)', img: '' },
-        { number: 56, name: 'SSF VOUCHER (WORTH RM 750.00)', img: '' },
-        { number: 57, name: 'GARDEN BBQ SET', img: '' },
-        { number: 58, name: 'GARDEN BBQ SET', img: '' },
-        { number: 59, name: 'SONY 5.1CH HOME CINEMA SOUNDBAR SYSTEM HT-S20R', img: '' },
-        { number: 60, name: 'SONY 5.1CH HOME CINEMA SOUNDBAR SYSTEM HT-S20R', img: '' },
-        { number: 61, name: 'MIRI MARRIOTT RESORT & SPA Premier Garden Room 3D2N(inclusive breakfast for two persons)', img: '' },
-        { number: 62, name: 'MIRI MARRIOTT RESORT & SPA Premier Garden Room 3D2N(inclusive breakfast for two persons)', img: '' },
-        { number: 63, name: 'PANASONIC RICE COOKER SR-HL151KSK', img: '' },
-        { number: 64, name: 'PANASONIC RICE COOKER SR-HL151KSK', img: '' },
-        { number: 65, name: 'PHILIPS ROBOTIC VACUUM CLEANER FC8794/01', img: '' },
-        { number: 66, name: 'PHILIPS ROBOTIC VACUUM CLEANER FC8794/01', img: '' },
-        { number: 67, name: 'SONY PORTABLE WIRELESS SPEAKER SRS-XE300', img: '' },
-        { number: 68, name: 'SONY PORTABLE WIRELESS SPEAKER SRS-XE300', img: '' },
-        { number: 69, name: 'PHILIPS DELUXE ALL-IN-ONE MULTICOOKER HD2145/62', img: '' },
-        { number: 70, name: 'PHILIPS DELUXE ALL-IN-ONE MULTICOOKER HD2145/62', img: '' },
-        { number: 71, name: 'CE INTERGRATED 150L DUAL CONTROL ELECTRIC OVEN CEO-150SS (E)', img: '' },
-        { number: 72, name: 'CE INTERGRATED 150L DUAL CONTROL ELECTRIC OVEN CEO-150SS (E)', img: '' },
-        { number: 73, name: 'CE INTERGRATED 150L DUAL CONTROL ELECTRIC OVEN CEO-150SS (E)', img: '' },
-        { number: 74, name: 'NINTENDO SWITCH LITE GAMES', img: '' },
-        { number: 75, name: 'NINTENDO SWITCH LITE GAMES', img: '' },
-        { number: 76, name: 'NINTENDO SWITCH LITE GAMES', img: '' },
-        { number: 77, name: 'SAMSUNG 7.0 KG FULLY AUTO WASHING MACHINEWA70H4000SG/FQ', img: '' },
-        { number: 78, name: 'SAMSUNG 7.0 KG FULLY AUTO WASHING MACHINEWA70H4000SG/FQ', img: '' },
-        { number: 79, name: 'SAMSUNG 7.0 KG FULLY AUTO WASHING MACHINEWA70H4000SG/FQ', img: '' },
-        { number: 80, name: 'SAMSUNG 30L GRILL MICROWAVE OVEN HEALTHY GRILL FLY', img: '' },
-        { number: 81, name: 'SAMSUNG 30L GRILL MICROWAVE OVEN HEALTHY GRILL FLY', img: '' },
-        { number: 82, name: 'SAMSUNG 30L GRILL MICROWAVE OVEN HEALTHY GRILL FLY', img: '' },
-        { number: 83, name: 'PHILIPS STEAM IRON BOARD V2 GC7846/86', img: '' },
-        { number: 84, name: 'PHILIPS STEAM IRON BOARD V2 GC7846/86', img: '' },
-        { number: 85, name: 'PHILIPS STEAM IRON BOARD V2 GC7846/86', img: '' },
-        { number: 86, name: 'SAMSUNG B-SERIES SOUNDBAR C450 BLACK', img: '' },
-        { number: 87, name: 'SAMSUNG B-SERIES SOUNDBAR C450 BLACK', img: '' },
-        { number: 88, name: 'SAMSUNG B-SERIES SOUNDBAR C450 BLACK', img: '' },
-        { number: 89, name: 'PANASONIC 32" LED HD TV TH-32H410K', img: '' },
-        { number: 90, name: 'PANASONIC 32" LED HD TV TH-32H410K', img: '' },
-        { number: 91, name: 'PANASONIC 32" LED HD TV TH-32H410K', img: '' },
-        { number: 92, name: 'GLOW AESTHETIC CASH VOUCHER (WORTH RM 700)', img: '' },
-        { number: 93, name: 'GLOW AESTHETIC CASH VOUCHER (WORTH RM 700)', img: '' },
-        { number: 94, name: 'GLOW AESTHETIC CASH VOUCHER (WORTH RM 700)', img: '' },
-        { number: 95, name: 'PHILIPS 6.2L XL ESSENTIAL AIR FRYER WITH NUTRIU APHD9280/91', img: '' },
-        { number: 96, name: 'PHILIPS 6.2L XL ESSENTIAL AIR FRYER WITH NUTRIU APHD9280/91', img: '' },
-        { number: 97, name: 'PHILIPS 6.2L XL ESSENTIAL AIR FRYER WITH NUTRIU APHD9280/91', img: '' },
-        { number: 98, name: 'TTRACING DUO V4 PRO AIR THREADS FABRIC GAMING CHAIR', img: '' },
-        { number: 99, name: 'TTRACING DUO V4 PRO AIR THREADS FABRIC GAMING CHAIR', img: '' },
-        { number: 100, name: 'TTRACING DUO V4 PRO AIR THREADS FABRIC GAMING CHAIR', img: '' },
-        { number: 101, name: 'FARLEY VOUCHER (WORTH RM500)', img: '' },
-        { number: 102, name: 'FARLEY VOUCHER (WORTH RM500)', img: '' },
-        { number: 103, name: 'PARKSON VOUCHER (WORTH RM 500)', img: '' },
-        { number: 104, name: 'PARKSON VOUCHER (WORTH RM 500)', img: '' },
-        { number: 105, name: 'H & M CASH VOUCHER (WORTH RM 500)', img: '' },
-        { number: 106, name: 'H & M CASH VOUCHER (WORTH RM 500)', img: '' },
-        { number: 107, name: 'UNIQLO CASH VOUCHER (WORTH RM 500)', img: '' },
-        { number: 108, name: 'UNIQLO CASH VOUCHER (WORTH RM 500)', img: '' },
-        { number: 109, name: 'PANASONIC 25L MICROWAVE NN-ST34NBMPQ', img: '' },
-        { number: 110, name: 'PANASONIC 25L MICROWAVE NN-ST34NBMPQ', img: '' },
-        { number: 111, name: 'VSPA VOUCHER (WORTH RM 500)', img: '' },
-        { number: 112, name: 'VSPA VOUCHER (WORTH RM 500)', img: '' },
-        { number: 113, name: 'SONY 2.1CH SOUND BAR HT-S100F//C', img: '' },
-        { number: 114, name: 'SONY 2.1CH SOUND BAR HT-S100F//C', img: '' },
-        { number: 115, name: 'PHILIPS AIR FRYER HD9218/51', img: '' },
-        { number: 116, name: 'PHILIPS AIR FRYER HD9218/51', img: '' },
-        { number: 117, name: 'SAMSUNG SOUNDBAR SYSTEM, HW-T420', img: '' },
-        { number: 118, name: 'SAMSUNG SOUNDBAR SYSTEM, HW-T420', img: '' },
-        { number: 119, name: 'PANASONIC FOOD PROCESSOR MK-F510', img: '' },
-        { number: 120, name: 'PANASONIC FOOD PROCESSOR MK-F510', img: '' },
-        { number: 121, name: 'ELBA SLOW JUICER ESJ-K6015 (RD)', img: '' },
-        { number: 122, name: 'ELBA SLOW JUICER ESJ-K6015 (RD)', img: '' },
-        { number: 123, name: 'ELBA SLOW JUICER ESJ-K6015 (RD)', img: '' },
-        { number: 124, name: 'KHIND 1200W 2L COMMERCIAL BLENDER BL-2000P', img: '' },
-        { number: 125, name: 'KHIND 1200W 2L COMMERCIAL BLENDER BL-2000P', img: '' },
-        { number: 126, name: 'KHIND 1200W 2L COMMERCIAL BLENDER BL-2000P', img: '' },
-        { number: 127, name: 'MIDEA AIR PURIFIER BD,APPLICATION AREA 20M2', img: '' },
-        { number: 128, name: 'MIDEA AIR PURIFIER BD,APPLICATION AREA 20M2', img: '' },
-        { number: 129, name: 'MIDEA AIR PURIFIER BD,APPLICATION AREA 20M2', img: '' },
-        { number: 130, name: 'MIDEA 60L MINI BAR MDRD88FGD30, BLACK', img: '' },
-        { number: 131, name: 'MIDEA 60L MINI BAR MDRD88FGD30, BLACK', img: '' },
-        { number: 132, name: 'MIDEA 60L MINI BAR MDRD88FGD30, BLACK', img: '' },
-        { number: 133, name: 'FUJIFILM INSTAX MINI 12', img: '' },
-        { number: 134, name: 'FUJIFILM INSTAX MINI 12', img: '' },
-        { number: 135, name: 'FUJIFILM INSTAX MINI 12', img: '' },
-        { number: 136, name: 'KHIND BOWL DRYER BD 919', img: '' },
-        { number: 137, name: 'KHIND BOWL DRYER BD 919', img: '' },
-        { number: 138, name: 'KHIND BOWL DRYER BD 919', img: '' },
-        { number: 139, name: 'MIDEA ANTI DUST MITES VACUUM CLEANER, 450W MD-MVCB500VM', img: '' },
-        { number: 140, name: 'MIDEA ANTI DUST MITES VACUUM CLEANER, 450W MD-MVCB500VM', img: '' },
-        { number: 141, name: 'MIDEA ANTI DUST MITES VACUUM CLEANER, 450W MD-MVCB500VM', img: '' },
-        { number: 142, name: 'KHIND 1000W 5.0L STAND MIXER SM-506P', img: '' },
-        { number: 143, name: 'KHIND 1000W 5.0L STAND MIXER SM-506P', img: '' },
-        { number: 144, name: 'KHIND 1000W 5.0L STAND MIXER SM-506P', img: '' },
-        { number: 145, name: 'PANASONIC 4L BINCHOTAN THERMO POT NC-EG4000PSK', img: '' },
-        { number: 146, name: 'PANASONIC 4L BINCHOTAN THERMO POT NC-EG4000PSK', img: '' },
-        { number: 147, name: 'PANASONIC 4L BINCHOTAN THERMO POT NC-EG4000PSK', img: '' },
-        { number: 148, name: 'MIDEA REMOTE MULTI FUNCTION AIR COOLING MAC-107', img: '' },
-        { number: 149, name: 'MIDEA REMOTE MULTI FUNCTION AIR COOLING MAC-107', img: '' },
-        { number: 150, name: 'MIDEA REMOTE MULTI FUNCTION AIR COOLING MAC-107', img: '' }
+        { number: 1, name: 'APRILIA SR GT 200 REPLICA (Worth RM20,900)', img: '1.png' },
+        { number: 2, name: 'MODENAS - DOMINAR 250 THE DUAL TONE EDITION (WORTH RM13,797)', img: '2.png' },
+        { number: 3, name: 'MODENAS - KARISMA EX 125 COLOUR YOUR LIFESTYLE (WORTH RM5,797)', img: '3.png' },
+        { number: 4, name: 'G-FLEX NECK & SHOULDER MASSAGER (WORTH RM2,288)', img: '4.png' },
+        { number: 5, name: 'INSTA 360 GO 3S (WORTH RM2,100)', img: '5.png' },
+        { number: 6, name: 'APPLE WATCH SE (WORTH RM1,200)', img: '6.png' },
+        { number: 7, name: 'Push Bike', img: '7.png' },
+        { number: 8, name: '3D2N STAY AT SUPERIOR KING ROOM, M RESORT & HOTEL KUALA LUMPUR (WORTH RM880 NETT)', img: '8.jpg' }
       ]
     };
     if (!this.nameList.length) {
@@ -435,12 +299,17 @@ export default class Slot {
       winnersWithPrize.push(winner);
     }
 
-    if (this.prizeNumber === 10) {
+    if (this.prizeNumber === this.grandPrizeStartNo) {
       // Push 1 winner
       this.winnerList.push({
         winners: [winnersWithPrize[0]]
       });
-    } else if (this.prizeNumber <= 9) {
+    } else if (this.prizeNumber <= this.grandPrizeStartNo - 1) {
+      if (!this.winnerList.length) {
+        this.winnerList.push({
+          winners: []
+        });
+      }
       this.winnerList[this.winnerList.length - 1].winners.push(winnersWithPrize[0]);
     } else {
       // Push 10 winner
