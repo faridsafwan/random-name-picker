@@ -111,7 +111,7 @@ export default class Slot {
         // Here we transform the reel to move up and stop at the top of last item
         // "(Number of item - 1) * height of reel item" of wheel is the amount of pixel to move up
         // 7.5rem * 16 = 120px, which equals to reel item height
-        { transform: `translateY(-${(this.maxReelItems - 1) * (7.5 * 16)}px)`, filter: 'blur(0)' }
+        { transform: `translateY(-${(this.maxReelItems - 1) * (7.5 * 23)}px)`, filter: 'blur(0)' }
       ],
       {
         duration: this.maxReelItems * 100, // 100ms for 1 item
@@ -259,9 +259,12 @@ export default class Slot {
     if (this.prizeNumber <= 10) {
       reelContainer.appendChild(fragment);
     }
+    const winnerThisRound = randomNames[randomNames.length - 1];
     // console.log('Displayed items: ', randomNames);
-    console.log('Name List: ', this.nameList);
-    console.log('Winner: ', randomNames[randomNames.length - 1]);
+    console.log('Name List: ', this.nameList.length);
+    console.log('Random Name List: ', randomNames);
+
+    console.log('Winner: ', winnerThisRound);
 
     // set winners array
     const winnersWithPrize: Winner[] = [];
@@ -287,7 +290,7 @@ export default class Slot {
       // Add only one winner to the array with a unique number and increment prizeNumber
       const winner = {
         number: this.prizeNumber,
-        name: randomNames[randomNames.length - 1],
+        name: winnerThisRound,
         img: '',
         prize: ''
       };
@@ -336,14 +339,14 @@ export default class Slot {
       } else {
         this.nameList.splice(
           this.nameList.findIndex(
-            (name) => name === randomNames[randomNames.length - 1]
+            (name) => name === winnerThisRound
           ),
           1
         );
       }
     }
 
-    console.log('Remaining: ', this.nameList);
+    console.log('Remaining: ', this.nameList.length);
     const nameList = JSON.stringify(this.nameList);
     localStorage.setItem('remaining', nameList);
 

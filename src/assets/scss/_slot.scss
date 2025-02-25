@@ -101,7 +101,7 @@
 
       &__outer {
         transform: scale($factor);
-        transform-origin: top left;
+        transform-origin: top center;
       }
     }
   }
@@ -117,7 +117,7 @@
     text-align: center;
     line-height: $reel-item-height;
     color: white;
-    text-overflow: ellipsis;
+    // text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     /* enable gpu accelaration to fix iOS flicker issue */
